@@ -27,8 +27,8 @@ We're going to store a game world in a text file. This means you can
 design your own levels and also you'll get to learn about working with
 files in Python - a really useful skill.
 
-Creating a text game world
-..........................
+Creating the text file
+......................
 
 So create a text file in your favourite editor and use the equals sign
 to draw some walls, for example: ::
@@ -76,12 +76,24 @@ If you typed the code in correctly then you'll see something like this in your c
   [['=', '=', '=', '=', '=', '=', '=', '=', '=', ' ', ' ', '=', '=', '=', '=', '=', '=', '=', '=', '='], ['=', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '='],
   ...
 
-That's python's way of printing a list and it means that your code loaded your world from the text file.
+That's python's way of printing a list and it means that your code
+loaded your world from the text file. Each element in the list is a
+character at a specific location in your world. The next step is to
+draw this on the screen.
 
 Drawing the world
 .................
 
-We need a way to map the characters in your text file to images in on the screen. Let's use a dictionary to do this. (explain). Add this code near the top of your code:
+As the moment you just have '=' characters in your world. Go back and
+put in some dots and stars (:code:`.` and :code:`*`) to represent food
+and power-ups.
+
+So now we need a way to map these characters in your text file to
+images in on the screen. Let's use a dictionary to do this. A
+dictionary is a map from one value to another, in our case we will map
+a single character to a file name of the image to use on screen.
+
+Add this code near the top of your game:
 
 .. code:: python
 
@@ -90,9 +102,47 @@ We need a way to map the characters in your text file to images in on the screen
         '=': 'wall.png', 
         '*': 'power.png', 
     }
-
-Now add this method to draw the world (explain):
     
+Trying out dictionaries in the REPL
+...................................
+
+Let's switch to the REPL to see how this dictionary works. First
+change your game mode to Python3--click the Mode icon to do this--then
+click the Run button and you'll get a :code:`>>>` prompt at the bottom
+of the screen.
+
+Try typing the following and see if you understand what's going on (don't type the :code:`>>>` characters) ...
+
+.. code:: python
+
+   >>> char_to_image['=']
+   'wall.png'
+   >>> char_to_image['*']
+   'power.png'
+   >>> char_to_image['!']
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   KeyError: '!'
+          
+
+:code:`KeyError` means that '!' is not found in the dictionary, it is
+not a valid key because we've not set it in the definition of
+:code:`char_to_image`.
+
+OK, make sense? Switch the game mode back to PygameZero, then
+continue...
+
+Drawing the world
+.................
+
+Add the method below to draw the world. It iterates through the rows
+in the world, then the blocks in each row and draws the right image
+for the character it finds.
+
+We use :code:`enumerate` so that we get each item in the world *and*
+its index in the array, which gives us the right x and y co-ordinates
+for the screen position.
+
 .. code:: python
     
     def draw():
@@ -102,6 +152,9 @@ Now add this method to draw the world (explain):
                 if image:
                     screen.blit(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE))
         pac.draw()
+
+Horay! We should now have your map on the screen ready to add our
+pacman charater.
 
   
 Next up...
