@@ -3,6 +3,9 @@
 Part 1
 ======
 
+In part 1 we're going to create a game world in a text file, read and
+process it in python, then draw it on the screen.
+
 Getting Started
 ---------------
 
@@ -71,7 +74,8 @@ your code:
           load_level(1)
           print(world)
 
-If you typed the code in correctly then you'll see something like this in your console: ::
+If you typed the code in correctly then you'll see something like this
+in your console: ::
 
   [['=', '=', '=', '=', '=', '=', '=', '=', '=', ' ', ' ', '=', '=', '=', '=', '=', '=', '=', '=', '='], ['=', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '='],
   ...
@@ -82,7 +86,7 @@ character at a specific location in your world. The next step is to
 draw this on the screen.
 
 Drawing the world
-.................
+-----------------
 
 As the moment you just have '=' characters in your world. Go back and
 put in some dots and stars (:code:`.` and :code:`*`) to represent food
@@ -132,8 +136,8 @@ not a valid key because we've not set it in the definition of
 OK, make sense? Switch the game mode back to PygameZero, then
 continue...
 
-Drawing the world
-.................
+From characters to images
+.........................
 
 Add the method below to draw the world. It iterates through the rows
 in the world, then the blocks in each row and draws the right image
@@ -155,6 +159,23 @@ for the screen position.
 
 Horay! We should now have your map on the screen ready to add our
 pacman charater.
+ 
+Wait! Did you get an error? Why do you think this is? Remember, look
+at the last line of the error message first.
+
+Can you fix the error yourself? Try first before scrolling down.
+
+...
+
+...
+
+...
+
+OK, so you should have added this to the top of your program:
+
+.. code:: python
+
+   BLOCK_SIZE = 32
 
   
 Next up...
