@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Pygame Zero Pac Man Tutorial'
+project = 'Pac Man Tutorial'
 copyright = '2020, Eric Clack'
 author = 'Eric Clack <eric@bn7.net>'
 show_authors = True
