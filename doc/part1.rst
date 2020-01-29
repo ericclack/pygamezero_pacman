@@ -181,4 +181,6 @@ OK, so you should have added this to the top of your program:
 Next up...
 ----------
 
+Adding Pac-Man, Ghosts, etc. Coming soon...
+
 .. :ref:`part2`.

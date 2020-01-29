@@ -15,6 +15,9 @@ char_to_image = {
     '.': 'dot.png',
     '=': 'wall.png',
     '*': 'power.png',
+    'C': 'pacman_o.png',
+    'g': 'ghost1.png',
+    'G': 'ghost2.png',
 }
 
 def load_level(number):

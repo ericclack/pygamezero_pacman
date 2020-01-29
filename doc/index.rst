@@ -6,7 +6,7 @@ well as learning about sprites and game logic we'll use files to store
 each level, which means you'll get to design your own levels, and
 you'll learn how to read files in Python.
 
-.. .. image:: images/screenshot.png
+.. image:: images/pacman-screenshot.png
            :width: 400
 
 If you've not yet set up Pygame Zero and the editor Mu, head over to the Flappy Bird Tutorial and follow the instructions there: https://tinyurl.com/y37qxb5h
