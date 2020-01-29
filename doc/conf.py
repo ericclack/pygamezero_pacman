@@ -19,11 +19,17 @@
 
 project = 'Pygame Zero Pac Man Tutorial'
 copyright = '2020, Eric Clack'
-author = 'Eric Clack'
+author = 'Eric Clack <eric@bn7.net>'
+show_authors = True
 
 # The full version, including alpha/beta/rc tags
 release = '1.0'
 
+# Include RST content at the end of every file,
+# useful for making variables here appear in documents
+rst_epilog = """
+.. |author| replace:: {author}
+""".format(author=author)
 
 # -- General configuration ---------------------------------------------------
 

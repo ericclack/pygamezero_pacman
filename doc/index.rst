@@ -1,8 +1,3 @@
-.. Candy Crush documentation master file, created by
-   sphinx-quickstart on Tue Nov 12 17:46:12 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Pygame Zero : Pac Man tutorial
 ==============================
 
@@ -34,3 +29,10 @@ Click on the Part 1 link below to get started.
    :caption: Contents:
 
    part1
+
+Get in touch
+------------
+
+We would love to hear how you've got on with this tutorial or receive
+any other feedback. Get in touch with the author: |author|
+ 
