@@ -10,7 +10,8 @@ world = []
 # Our sprites
 pacman = Actor('pacman_o.png', anchor=('left', 'top'))
 pacman.x = pacman.y = 1*BLOCK_SIZE
-dx,dy = 0,0
+# Direction that we're going in
+pacman.dx, pacman.dy = 0,0
 
 
 ghosts = []
@@ -63,32 +64,31 @@ def blocks_at(pixel_pos, delta=(0,0)):
     return blocks
 
 def update():
-    global dx,dy
     # In order to go in direction dx, dy their must be no wall that way
-    next_blocks = blocks_at(pacman.pos, (dx,dy))
-    if '=' not in next_blocks:
-        pacman.x += dx * SPEED
-        pacman.y += dy * SPEED
+    if '=' not in blocks_at(pacman.pos, (pacman.dx,0)):
+        pacman.x += pacman.dx * SPEED
+    if '=' not in blocks_at(pacman.pos, (0,pacman.dy)):
+        pacman.y += pacman.dy * SPEED
 
 def on_key_up(key):
-    global dx,dy
-    dx,dy = 0,0
+    if key in (keys.LEFT, keys.RIGHT):
+        pacman.dx = 0
+    if key in (keys.UP, keys.DOWN):
+        pacman.dy = 0
 
 def on_key_down(key):
-    global dx,dy
     if key == keys.LEFT:
-        dx = -1
+        pacman.dx = -1
     if key == keys.RIGHT:
-        dx = 1
+        pacman.dx = 1
     if key == keys.UP:
-        dy = -1
+        pacman.dy = -1
     if key == keys.DOWN:
-        dy = 1
+        pacman.dy = 1
 
 load_level(1)
 
 def every_second():
-    global dx,dy
-    print(blocks_at(pacman.pos, (dx,dy)))
+    print(blocks_at(pacman.pos, (pacman.dx,pacman.dy)))
 
 clock.schedule_interval(every_second, 0.25)
