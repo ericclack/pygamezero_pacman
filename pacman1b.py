@@ -2,7 +2,6 @@ WORLD_SIZE = 20
 BLOCK_SIZE = 32
 WIDTH = WORLD_SIZE*BLOCK_SIZE
 HEIGHT = WORLD_SIZE*BLOCK_SIZE
-SPEED = 2
 
 # An array containing the world tiles
 world = []
@@ -12,6 +11,7 @@ pacman = Actor('pacman_o.png', anchor=('left', 'top'))
 pacman.x = pacman.y = 1*BLOCK_SIZE
 # Direction that we're going in
 pacman.dx, pacman.dy = 0,0
+
 
 ghosts = []
 
@@ -42,9 +42,35 @@ def draw():
                 screen.blit(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE))
     pacman.draw()
 
+def blocks_ahead_of_pacman(dx, dy):
+    """Return a list of tiles at this position + delta"""
+
+    # Here's where we want to move to
+    x = pacman.x + dx
+    y = pacman.y + dy
+
+    # Find integer block pos, using floor (so 4.7 becomes 4)
+    ix,iy = int(x // BLOCK_SIZE), int(y // BLOCK_SIZE)
+    # Remainder let's us check adjacent blocks
+    rx, ry = x % BLOCK_SIZE, y % BLOCK_SIZE
+
+    blocks = [ world[iy][ix] ]
+    if rx: blocks.append(world[iy][ix+1])
+    if ry: blocks.append(world[iy+1][ix])
+    if rx and ry: blocks.append(world[iy+1][ix+1])
+
+    return blocks
+
 def update():
-    pacman.x += pacman.dx
-    pacman.y += pacman.dy
+    # In order to go in direction dx, dy their must be no wall that way
+    #if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
+    #    pacman.x += pacman.dx
+    #if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
+    #    pacman.y += pacman.dy
+
+    if '=' not in blocks_ahead_of_pacman(pacman.dx, pacman.dy):
+        pacman.x += pacman.dx
+        pacman.y += pacman.dy
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
@@ -63,3 +89,8 @@ def on_key_down(key):
         pacman.dy = 1
 
 load_level(1)
+
+def every_second():
+    print(blocks_ahead_of_pacman(pacman.dx, pacman.dy))
+
+clock.schedule_interval(every_second, 0.25)
