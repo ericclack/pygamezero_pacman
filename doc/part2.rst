@@ -11,8 +11,8 @@ Making ghost sprites
 --------------------
 
 We can see the ghosts on the screen, but they don't move yet. That's
-because they are just part of the background and drawn in place in the
-:code:`draw` function.
+because they are just part of the background and drawn in one place in
+the :code:`draw` function.
 
 So let's pick them out of the world and make them into actors. We can
 use a similar method to iterate through the world as we did in the
@@ -39,7 +39,7 @@ function, right under your :code:`load_level(1)` line:
     make_ghost_actors()
                     
 You can see from the code above that we are looking for two letters in
-the world: a lower case and upper case G. If we find it we create an
+the world: a lower case and upper case G. If we find a match we create an
 actor in the correct place, using x and y from the :code:`for` loops,
 then finally we remove the block from the world as otherwise we'd have
 two ghosts: one that moves and one that stays in place.
@@ -73,7 +73,7 @@ random library:
     SPEED = 2
     GHOST_SPEED = 1
 
-Now when we create a ghost let's set a random speed. Just under this line:
+Now when we create a ghost let's set a random direction. Just under this line:
 
 .. code:: python
 
@@ -105,7 +105,180 @@ Press *Play* to test. Hmmm... not great, the ghosts can move through
 the walls. Maybe that's what ghosts do in real life, but not in
 Pac-Man!
 
+Look at all the code in that :code:`update` function, you can see
+we've moving Pac-Man differently to how we're moving each ghost:
 
+.. code:: python
+          
+    def update():
+        # In order to go in direction dx, dy their must be no wall that way
+        if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
+            pacman.x += pacman.dx
+        if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
+            pacman.y += pacman.dy
+
+        for g in ghosts:
+            g.x += g.dx
+            g.y += g.dy
+
+You can see that with Pac-Man we're checking for walls (the = character) but
+not for the ghosts. Let's fix this.
+
+What we want is a general purpose version of
+:code:`blocks_ahead_of_pacman` that we can use with ghosts too, then
+we can check for walls for any sprite.
+
+So first up, rename the :code:`blocks_ahead_of_pacman` function, add a
+new argument so we can pass in the sprite to check and change the two
+instances of :code:`pacman` to :code:`sprite`
+
+Let's go through those steps. (1) change the function from: ::
+
+  def blocks_ahead_of_pacman(dx, dy):
+  
+To: ::
+
+  def blocks_ahead_of(sprite, dx, dy):
+
+Now (2) change these two lines: ::
+
+  x = pacman.x + dx
+  y = pacman.y + dy
+  
+To: ::
+
+  x = sprite.x + dx
+  y = sprite.y + dy
+
+Try running your code now. You should see an error, because we've
+changed the function but not the places where we use it, which still
+refer to the old function.
+
+So in the update function, change the function calls to use the new
+method. See if you can figure out how to do this. (You can see the
+complete function below if you are stuck).
+
+OK, so we can now use this general purpose function
+:code:`blocks_ahead_of` with ghosts too, so change the last few lines
+of your :code:`update` function to these:
+
+.. code:: python
+
+    for g in ghosts:
+        if '=' not in blocks_ahead_of(g, g.dx, 0):
+            g.x += g.dx
+        if '=' not in blocks_ahead_of(g, 0, g.dy):
+            g.y += g.dy          
+
+So that the complete function looks like this:
+
+.. code:: python
+
+    def update():
+        # In order to go in direction dx, dy their must be no wall that way
+        if '=' not in blocks_ahead_of(pacman, pacman.dx, 0):
+            pacman.x += pacman.dx
+        if '=' not in blocks_ahead_of(pacman, 0, pacman.dy):
+            pacman.y += pacman.dy
+
+        for g in ghosts:
+            if '=' not in blocks_ahead_of(g, g.dx, 0):
+                g.x += g.dx
+            if '=' not in blocks_ahead_of(g, 0, g.dy):
+                g.y += g.dy          
+
+Now we have some good ghost movement, but if you leave it running for
+a bit chances are you'll get an error like this: ::
+
+  IndexError: list index out of range
+
+That's because a ghost has gone off the screen and its (x,y)
+co-ordinates are outside the range of our world.
+
+There's one other problem, not a defect as such, but a violation of
+a good coder principle: Don't Repeat Yourself (or DRY). Much of
+the code in :code:`update` is repeated. If we fix this first, then
+maybe we can fix the out of range error more easily.
+
+Let's create a new function :code:`move_ahead` like so:
+
+.. code:: python
+          
+    def move_ahead(sprite):
+        # In order to go in direction dx, dy their must be no wall that way
+        if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
+            sprite.x += sprite.dx
+        if '=' not in blocks_ahead_of(sprite, 0, sprite.dy):
+            sprite.y += sprite.dy
+
+This contains all the logic we need to move a sprite forward, using (dx,dy)
+and avoiding walls. Let's refactor :code:`update` to use this. Replace
+the function with this new, much shorter one:
+
+.. code:: python
+
+    def update():
+        move_ahead(pacman)
+        for g in ghosts:
+            move_ahead(g)
+
+Now we have less code, and also just as importantly it's really easy
+to see what :code:`update` is actually doing.
+
+Let's look at that :code:`IndexError`. We can see that it's being
+generated from inside the :code:`blocks_ahead_of` function. We need
+to do two things to fix it.
+
+ 1. Wrap the sprites around, so that if they go off one side of the
+    screen, they come back on the other side.
+ 2. Don't check for blocks outside of the world.
+
+For the wrap around we want to keep our sprite's x and y position
+in between two values: 0 and the width or height of the screen. If we
+go outside this range we want to wrap to the other end of the range.
+
+We can do this with a simple function:
+
+.. code:: python
+
+    def wrap_around(mini, val, maxi):
+        if val < mini: return maxi
+        elif val > maxi: return mini
+        else: return val
+
+You can test this in a Python3 script (in Mu or IDLE) to see how it
+works. Here's an example:
+
+.. code:: python
+          
+    >>> wrap_around(0, 5, 10)
+    5                          # No change
+    >>> wrap_around(0, 15, 10)
+    0                          # 15 is too big, so wrap to 0
+    >>> wrap_around(0, -1, 10)
+    10                         # -1 is too small, so wrap to 10
+
+OK, let's use this function. Add these lines to the end of
+:code:`move_ahead`:
+
+.. code:: python
+
+    # Keep sprite on the screen
+    sprite.x = wrap_around(0, sprite.x, WIDTH-BLOCK_SIZE)
+    sprite.y = wrap_around(0, sprite.y, HEIGHT-BLOCK_SIZE)          
+
+Finally to stop checking blocks off the world, add these lines to
+:code:`blocks_ahead_of` just under the definition of :code:`rx, ry =`
+
+.. code:: python
+          
+    # Keep in bounds of world
+    if ix == WORLD_SIZE-1: rx = 0
+    if iy == WORLD_SIZE-1: ry = 0      
+
+Phew! That was quite a bit of work. So how are our ghosts behaving
+now? Press *Play* to test them out.
+    
 Next up...
 ----------
 
