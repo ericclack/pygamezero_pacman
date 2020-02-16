@@ -81,18 +81,17 @@ def blocks_ahead_of(sprite, dx, dy):
 
     return blocks
 
-def update():
+def move_ahead(sprite):
     # In order to go in direction dx, dy their must be no wall that way
-    if '=' not in blocks_ahead_of(pacman, pacman.dx, 0):
-        pacman.x += pacman.dx
-    if '=' not in blocks_ahead_of(pacman, 0, pacman.dy):
-        pacman.y += pacman.dy
+    if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
+        sprite.x += sprite.dx
+    if '=' not in blocks_ahead_of(sprite, 0, sprite.dy):
+        sprite.y += sprite.dy
 
+def update():
+    move_ahead(pacman)
     for g in ghosts:
-        if '=' not in blocks_ahead_of(g, g.dx, 0):
-            g.x += g.dx
-        if '=' not in blocks_ahead_of(g, 0, g.dy):
-            g.y += g.dy
+        move_ahead(g)
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
