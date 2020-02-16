@@ -106,7 +106,7 @@ def move_ahead(sprite):
     sprite.y = wrap_around(0, sprite.y, HEIGHT-BLOCK_SIZE)
 
     # Return whether we moved
-    return not (oldx == sprite.x and oldy == sprite.y)
+    return oldx != sprite.x or oldy != sprite.y
 
 def update():
     move_ahead(pacman)

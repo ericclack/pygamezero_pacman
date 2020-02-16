@@ -296,8 +296,58 @@ Keep on moving
 Yes, our ghosts eventually stop, usually in a corner. That's
 because we never change their direction.
 
-TBC...
+If we can tell that they've stopped moving we can do something about
+it. The function :code:`move_ahead` is the place to start. Here's the
+current function:
 
+.. code:: python
+
+    def move_ahead(sprite):
+        # In order to go in direction dx, dy their must be no wall that way
+        if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
+            sprite.x += sprite.dx
+        if '=' not in blocks_ahead_of(sprite, 0, sprite.dy):
+            sprite.y += sprite.dy
+
+        # Keep sprite on the screen
+        sprite.x = wrap_around(0, sprite.x, WIDTH-BLOCK_SIZE)
+        sprite.y = wrap_around(0, sprite.y, HEIGHT-BLOCK_SIZE)
+
+How do we tell if the sprite has moved? We can record the position
+at the start of the funciton and compare at the end of the function
+like this...
+
+Add these two lines to the start of the function: ::
+
+        # Record current pos so we can see if the sprite moved
+        oldx, oldy = sprite.x, sprite.y
+
+And these two lines at the end: ::
+        
+        # Return whether we moved
+        return oldx != sprite.x or oldy != sprite.y
+
+So now anyone that calls this function can find out, if they want,
+whether the sprite has moved.
+
+OK, so back in the :code:`update` function we can use this new
+information... Change your function to read:
+
+.. code:: python
+
+   def update():
+       move_ahead(pacman)
+
+       for g in ghosts:
+           if not move_ahead(g):
+               set_random_dir(g, GHOST_SPEED)          
+
+There's one more new function here so that we Don't Repeat
+Ourselves. Can you spot it? What do you think we should put in it?
+Hint: the code is already written, it's just not in a function yet.
+
+If you are completely stuck, have a look at the `code for part 2`_ on
+GitHub.
     
 Next up...
 ----------
@@ -310,3 +360,4 @@ These's lots more to do, including:
 
 Coming soon...
 
+.. _code for part 2: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman2.py
