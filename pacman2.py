@@ -62,12 +62,12 @@ def draw():
     pacman.draw()
     for g in ghosts: g.draw()
 
-def blocks_ahead_of_pacman(dx, dy):
+def blocks_ahead_of(sprite, dx, dy):
     """Return a list of tiles at this position + delta"""
 
     # Here's where we want to move to
-    x = pacman.x + dx
-    y = pacman.y + dy
+    x = sprite.x + dx
+    y = sprite.y + dy
 
     # Find integer block pos, using floor (so 4.7 becomes 4)
     ix,iy = int(x // BLOCK_SIZE), int(y // BLOCK_SIZE)
@@ -83,14 +83,16 @@ def blocks_ahead_of_pacman(dx, dy):
 
 def update():
     # In order to go in direction dx, dy their must be no wall that way
-    if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
+    if '=' not in blocks_ahead_of(pacman, pacman.dx, 0):
         pacman.x += pacman.dx
-    if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
+    if '=' not in blocks_ahead_of(pacman, 0, pacman.dy):
         pacman.y += pacman.dy
 
     for g in ghosts:
-        g.x += g.dx
-        g.y += g.dy
+        if '=' not in blocks_ahead_of(g, g.dx, 0):
+            g.x += g.dx
+        if '=' not in blocks_ahead_of(g, 0, g.dy):
+            g.y += g.dy
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
