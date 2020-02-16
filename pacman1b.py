@@ -63,14 +63,14 @@ def blocks_ahead_of_pacman(dx, dy):
 
 def update():
     # In order to go in direction dx, dy their must be no wall that way
-    #if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
-    #    pacman.x += pacman.dx
-    #if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
-    #    pacman.y += pacman.dy
-
-    if '=' not in blocks_ahead_of_pacman(pacman.dx, pacman.dy):
+    if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
         pacman.x += pacman.dx
+    if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
         pacman.y += pacman.dy
+
+    #if '=' not in blocks_ahead_of_pacman(pacman.dx, pacman.dy):
+    #    pacman.x += pacman.dx
+    #    pacman.y += pacman.dy
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
