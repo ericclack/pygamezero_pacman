@@ -350,5 +350,5 @@ you'll agree is worse -- do try it:
 Next up...
 ----------
 
-Adding Ghosts, etc. Coming soon...
+Adding Ghosts, etc. Move on to :ref:`part2`.
 
