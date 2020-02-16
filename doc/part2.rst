@@ -105,6 +105,9 @@ Press *Play* to test. Hmmm... not great, the ghosts can move through
 the walls. Maybe that's what ghosts do in real life, but not in
 Pac-Man!
 
+Don't move through walls
+------------------------
+
 Look at all the code in that :code:`update` function, you can see
 we've moving Pac-Man differently to how we're moving each ghost:
 
@@ -192,8 +195,12 @@ a bit chances are you'll get an error like this: ::
 
   IndexError: list index out of range
 
-That's because a ghost has gone off the screen and its (x,y)
-co-ordinates are outside the range of our world.
+Wrapping around
+---------------
+
+We get this error because a ghost has gone off the screen and its
+(x,y) co-ordinates are outside the range of our world. You'll also
+get this error if you move Pac-Man off the screen. 
 
 There's one other problem, not a defect as such, but a violation of
 a good coder principle: Don't Repeat Yourself (or DRY). Much of
@@ -278,9 +285,28 @@ Finally to stop checking blocks off the world, add these lines to
 
 Phew! That was quite a bit of work. So how are our ghosts behaving
 now? Press *Play* to test them out.
+
+Notice anything odd?
+
+Have any ideas how to fix it?
+
+Keep on moving
+--------------
+
+Yes, our ghosts eventually stop, usually in a corner. That's
+because we never change their direction.
+
+TBC...
+
     
 Next up...
 ----------
 
-Let a mentor know what you want to see next.
+These's lots more to do, including:
+
+ * Pac-Man eating food
+ * Ghosts killing Pac-Man
+ * Power up pills.
+
+Coming soon...
 
