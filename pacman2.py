@@ -1,7 +1,12 @@
+import random
+
 WORLD_SIZE = 20
 BLOCK_SIZE = 32
 WIDTH = WORLD_SIZE*BLOCK_SIZE
 HEIGHT = WORLD_SIZE*BLOCK_SIZE
+
+SPEED = 2
+GHOST_SPEED = 1
 
 # An array containing the world tiles
 world = []
@@ -37,7 +42,12 @@ def make_ghost_actors():
     for y, row in enumerate(world):
         for x, block in enumerate(row):
             if block in ['g', 'G']:
+                # Make the sprite in the correct position
                 g = Actor(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE), anchor=('left', 'top'))
+                # Random direction
+                g.dx = random.choice([-GHOST_SPEED,GHOST_SPEED])
+                g.dy = random.choice([-GHOST_SPEED,GHOST_SPEED])
+
                 ghosts.append(g)
                 # Now we have the ghost sprite we don't need this block
                 world[y][x] = None
@@ -78,9 +88,9 @@ def update():
     if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
         pacman.y += pacman.dy
 
-    #if '=' not in blocks_ahead_of_pacman(pacman.dx, pacman.dy):
-    #    pacman.x += pacman.dx
-    #    pacman.y += pacman.dy
+    for g in ghosts:
+        g.x += g.dx
+        g.y += g.dy
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
@@ -90,13 +100,13 @@ def on_key_up(key):
 
 def on_key_down(key):
     if key == keys.LEFT:
-        pacman.dx = -2
+        pacman.dx = -SPEED
     if key == keys.RIGHT:
-        pacman.dx = 2
+        pacman.dx = SPEED
     if key == keys.UP:
-        pacman.dy = -2
+        pacman.dy = -SPEED
     if key == keys.DOWN:
-        pacman.dy = 2
+        pacman.dy = SPEED
 
 # Game set up
 load_level(1)
