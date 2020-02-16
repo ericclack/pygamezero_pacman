@@ -73,6 +73,9 @@ def blocks_ahead_of(sprite, dx, dy):
     ix,iy = int(x // BLOCK_SIZE), int(y // BLOCK_SIZE)
     # Remainder let's us check adjacent blocks
     rx, ry = x % BLOCK_SIZE, y % BLOCK_SIZE
+    # Keep in bounds of world
+    if ix == WORLD_SIZE-1: rx = 0
+    if iy == WORLD_SIZE-1: ry = 0
 
     blocks = [ world[iy][ix] ]
     if rx: blocks.append(world[iy][ix+1])
@@ -81,12 +84,21 @@ def blocks_ahead_of(sprite, dx, dy):
 
     return blocks
 
+def wrap_around(mini, val, maxi):
+    if val < mini: return maxi
+    elif val > maxi: return mini
+    else: return val
+
 def move_ahead(sprite):
     # In order to go in direction dx, dy their must be no wall that way
     if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
         sprite.x += sprite.dx
     if '=' not in blocks_ahead_of(sprite, 0, sprite.dy):
         sprite.y += sprite.dy
+
+    # Keep sprite on the screen
+    sprite.x = wrap_around(0, sprite.x, WIDTH-BLOCK_SIZE)
+    sprite.y = wrap_around(0, sprite.y, HEIGHT-BLOCK_SIZE)
 
 def update():
     move_ahead(pacman)
