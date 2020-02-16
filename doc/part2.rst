@@ -114,7 +114,7 @@ we've moving Pac-Man differently to how we're moving each ghost:
 .. code:: python
           
     def update():
-        # In order to go in direction dx, dy their must be no wall that way
+        # In order to go in direction dx, dy there must be no wall that way
         if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
             pacman.x += pacman.dx
         if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
@@ -178,7 +178,7 @@ So that the complete function looks like this:
 .. code:: python
 
     def update():
-        # In order to go in direction dx, dy their must be no wall that way
+        # In order to go in direction dx, dy there must be no wall that way
         if '=' not in blocks_ahead_of(pacman, pacman.dx, 0):
             pacman.x += pacman.dx
         if '=' not in blocks_ahead_of(pacman, 0, pacman.dy):
@@ -212,7 +212,7 @@ Let's create a new function :code:`move_ahead` like so:
 .. code:: python
           
     def move_ahead(sprite):
-        # In order to go in direction dx, dy their must be no wall that way
+        # In order to go in direction dx, dy there must be no wall that way
         if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
             sprite.x += sprite.dx
         if '=' not in blocks_ahead_of(sprite, 0, sprite.dy):
@@ -303,7 +303,7 @@ current function:
 .. code:: python
 
     def move_ahead(sprite):
-        # In order to go in direction dx, dy their must be no wall that way
+        # In order to go in direction dx, dy there must be no wall that way
         if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
             sprite.x += sprite.dx
         if '=' not in blocks_ahead_of(sprite, 0, sprite.dy):
@@ -352,7 +352,7 @@ GitHub.
 Next up...
 ----------
 
-These's lots more to do, including:
+There's lots more to do, including:
 
  * Pac-Man eating food
  * Ghosts killing Pac-Man

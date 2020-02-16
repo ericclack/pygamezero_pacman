@@ -62,7 +62,7 @@ def blocks_ahead_of_pacman(dx, dy):
     return blocks
 
 def update():
-    # In order to go in direction dx, dy their must be no wall that way
+    # In order to go in direction dx, dy there must be no wall that way
     if '=' not in blocks_ahead_of_pacman(pacman.dx, 0):
         pacman.x += pacman.dx
     if '=' not in blocks_ahead_of_pacman(0, pacman.dy):
