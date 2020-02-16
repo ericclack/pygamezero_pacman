@@ -38,15 +38,17 @@ def load_level(number):
                 row.append(block)
             world.append(row)
 
+def set_random_dir(sprite, speed):
+    sprite.dx = random.choice([-speed, speed])
+    sprite.dy = random.choice([-speed, speed])
+
 def make_ghost_actors():
     for y, row in enumerate(world):
         for x, block in enumerate(row):
             if block in ['g', 'G']:
                 # Make the sprite in the correct position
                 g = Actor(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE), anchor=('left', 'top'))
-                # Random direction
-                g.dx = random.choice([-GHOST_SPEED,GHOST_SPEED])
-                g.dy = random.choice([-GHOST_SPEED,GHOST_SPEED])
+                set_random_dir(g, GHOST_SPEED)
 
                 ghosts.append(g)
                 # Now we have the ghost sprite we don't need this block
@@ -90,6 +92,9 @@ def wrap_around(mini, val, maxi):
     else: return val
 
 def move_ahead(sprite):
+    # Record current pos so we can see if the sprite moved
+    oldx, oldy = sprite.x, sprite.y
+
     # In order to go in direction dx, dy their must be no wall that way
     if '=' not in blocks_ahead_of(sprite, sprite.dx, 0):
         sprite.x += sprite.dx
@@ -100,10 +105,15 @@ def move_ahead(sprite):
     sprite.x = wrap_around(0, sprite.x, WIDTH-BLOCK_SIZE)
     sprite.y = wrap_around(0, sprite.y, HEIGHT-BLOCK_SIZE)
 
+    # Return whether we moved
+    return not (oldx == sprite.x and oldy == sprite.y)
+
 def update():
     move_ahead(pacman)
+
     for g in ghosts:
-        move_ahead(g)
+        if not move_ahead(g):
+            set_random_dir(g, GHOST_SPEED)
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
