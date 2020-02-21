@@ -70,13 +70,13 @@ With these lines: ::
     moved = (oldx != sprite.x or oldy != sprite.y)
 
     # Costume change for pacman
-		if moved and sprite == pacman:
+    if moved and sprite == pacman:
         a = 0
         if oldx < sprite.x: a = 0
-				elif oldy > sprite.y: a = 90
-				elif oldx > sprite.x: a = 180
-				elif oldy < sprite.y: a = 270
-				sprite.angle = a
+        elif oldy > sprite.y: a = 90
+        elif oldx > sprite.x: a = 180
+        elif oldy < sprite.y: a = 270
+        sprite.angle = a
 							      
     return moved
     
