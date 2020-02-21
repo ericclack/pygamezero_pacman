@@ -12,8 +12,8 @@ GHOST_SPEED = 1
 world = []
 
 # Our sprites
-pacman = Actor('pacman_o.png', anchor=('left', 'top'))
-pacman.x = pacman.y = 1*BLOCK_SIZE
+pacman = Actor('pacman_o.png')
+pacman.x = pacman.y = 1.5*BLOCK_SIZE
 # Direction that we're going in
 pacman.dx, pacman.dy = 0,0
 pacman.food_left = None
@@ -75,9 +75,10 @@ def draw():
 def blocks_ahead_of(sprite, dx, dy):
     """Return a list of tiles at this position + delta"""
 
-    # Here's where we want to move to
-    x = sprite.x + dx
-    y = sprite.y + dy
+    # Here's where we want to move to, bit of rounding to
+    # ensure we get the exact pixel position
+    x = int(round(sprite.left)) + dx
+    y = int(round(sprite.top)) + dy
 
     # Find integer block pos, using floor (so 4.7 becomes 4)
     ix,iy = int(x // BLOCK_SIZE), int(y // BLOCK_SIZE)
@@ -124,7 +125,7 @@ def eat_food():
         print("Food left: ", pacman.food_left)
 
 def lose_life():
-    pacman.x = pacman.y = 1 * BLOCK_SIZE
+    pacman.x = pacman.y = 1.5 * BLOCK_SIZE
     # Move ghosts back to their start pos
     for g, (x, y) in zip(ghosts, ghost_start_pos):
         g.x = x * BLOCK_SIZE
@@ -149,12 +150,16 @@ def on_key_up(key):
 def on_key_down(key):
     if key == keys.LEFT:
         pacman.dx = -SPEED
+        pacman.angle = 180
     if key == keys.RIGHT:
         pacman.dx = SPEED
+        pacman.angle = 0
     if key == keys.UP:
         pacman.dy = -SPEED
+        pacman.angle = 90
     if key == keys.DOWN:
         pacman.dy = SPEED
+        pacman.angle = 270
 
 # Game set up
 load_level(1)
