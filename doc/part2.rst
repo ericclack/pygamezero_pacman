@@ -352,12 +352,12 @@ GitHub.
 Next up...
 ----------
 
-There's lots more to do, including:
+In the next part of this tutorial we'll work on:
 
- * Pac-Man eating food
+ * Pac-Man eating the food
  * Ghosts killing Pac-Man
  * Power up pills.
 
-Coming soon...
+Move on to :ref:`part3`.
 
 .. _code for part 2: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman2.py

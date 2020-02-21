@@ -350,5 +350,6 @@ you'll agree is worse -- do try it:
 Next up...
 ----------
 
-Adding Ghosts, etc. Move on to :ref:`part2`.
+In part two of this tutorial we'll get the ghosts moving.
+Move on to :ref:`part2`.
 
