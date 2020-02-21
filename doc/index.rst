@@ -30,6 +30,7 @@ Click on the Part 1 link below to get started.
 
    part1
    part2
+   part3
 
 Get in touch
 ------------
