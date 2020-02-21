@@ -160,16 +160,12 @@ def on_key_up(key):
 def on_key_down(key):
     if key == keys.LEFT:
         pacman.dx = -SPEED
-        pacman.angle = 180
     if key == keys.RIGHT:
         pacman.dx = SPEED
-        pacman.angle = 0
     if key == keys.UP:
         pacman.dy = -SPEED
-        pacman.angle = 90
     if key == keys.DOWN:
         pacman.dy = SPEED
-        pacman.angle = 270
 
 # Game set up
 load_level(1)
