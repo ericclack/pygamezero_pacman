@@ -20,6 +20,8 @@ pacman.food_left = None
 
 # An array of ghosts
 ghosts = []
+# Where do the ghosts start?
+ghost_start_pos = []
 
 # Your level will contain characters, they map
 # to the following images
@@ -56,6 +58,7 @@ def make_ghost_actors():
                 set_random_dir(g, GHOST_SPEED)
 
                 ghosts.append(g)
+                ghost_start_pos.append((x,y))
                 # Now we have the ghost sprite we don't need this block
                 world[y][x] = None
 
@@ -120,6 +123,13 @@ def eat_food():
         pacman.food_left -= 1
         print("Food left: ", pacman.food_left)
 
+def lose_life():
+    pacman.x = pacman.y = 1 * BLOCK_SIZE
+    # Move ghosts back to their start pos
+    for g, (x, y) in zip(ghosts, ghost_start_pos):
+        g.x = x * BLOCK_SIZE
+        g.y = y * BLOCK_SIZE
+
 def update():
     move_ahead(pacman)
     eat_food()
@@ -127,6 +137,8 @@ def update():
     for g in ghosts:
         if not move_ahead(g):
             set_random_dir(g, GHOST_SPEED)
+        if g.colliderect(pacman):
+            lose_life()
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
