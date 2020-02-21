@@ -114,17 +114,18 @@ def move_ahead(sprite):
     sprite.x = wrap_around(0, sprite.x, WIDTH-BLOCK_SIZE)
     sprite.y = wrap_around(0, sprite.y, HEIGHT-BLOCK_SIZE)
 
+    # Did we move?
+    moved = (oldx != sprite.x or oldy != sprite.y)
+
     # Costume change for pacman
-    if sprite == pacman:
+    if moved and sprite == pacman:
         a = 0
         if oldx < sprite.x: a = 0
         elif oldy > sprite.y: a = 90
         elif oldx > sprite.x: a = 180
         elif oldy < sprite.y: a = 270
         sprite.angle = a
-
-    # Return whether we moved
-    return oldx != sprite.x or oldy != sprite.y
+    return moved
 
 def eat_food():
     ix,iy = int(pacman.x / BLOCK_SIZE), int(pacman.y / BLOCK_SIZE)
