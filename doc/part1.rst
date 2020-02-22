@@ -179,22 +179,25 @@ OK, so you should have added this to the top of your program:
 What size is the world?
 -----------------------
 
-Probably you've noticed that your world doesn't fit in the screen that
-Pygame Zero opens for you. That's because the :code:`WIDTH` and
-:code:`HEIGHT` you've set at the start of your code are unlikely to
-match the world size you've created in your text file.
+You've probably noticed that your world doesn't perfectly fit in game
+window. That's because the :code:`WIDTH` and :code:`HEIGHT` you've set
+at the start of your code are unlikely to match the world size stored
+in your text file.
 
-We can fix this by redoing the constants at the start of your code.
+We can fix this by redefining the constants at the start of your code.
 
 Firstly decide on what size worlds you want to support, then add one
-new constant :code:`WORLD_SIZE` and redefining :code:`WIDTH` and
-:code:`HEIGHT` to use this. Here's an example for a 32x32 world: ::
+new constant :code:`WORLD_SIZE` and redefine :code:`WIDTH` and
+:code:`HEIGHT` to use this.
+
+Here's an example for a 32x32 world: ::
 
     WORLD_SIZE = 20
     BLOCK_SIZE = 32
     WIDTH = WORLD_SIZE*BLOCK_SIZE
     HEIGHT = WORLD_SIZE*BLOCK_SIZE  
-   
+
+    
 Adding the Pac-Man
 ------------------
 
@@ -369,14 +372,17 @@ you'll agree is worse -- do try it:
 Adding ghosts
 -------------
 
-Let's add some ghosts to our world. Open up your :code:`level-1.txt` file
-and put in some uppercase and lowercase Gs in your world where you want the ghosts.
+Let's add some ghosts to our game. Open up your :code:`level-1.txt`
+file and put in some uppercase and lowercase Gs in your world where
+you want the ghosts to appear.
 
-We now need to pick the images that we want to use for the ghosts. Edit your
-dictionary :code:`char_to_image` to map the G characters the images you want
-to use (which represent the different ghost colours).
+We now need to pick the images that we want to use for the
+ghosts. Edit your dictionary :code:`char_to_image` to map the G
+characters the images you want to use (which represent the different
+ghost colours). You can see all the images available by clicking the
+*Images* button on the toolbar.
 
-Here's one option: ::
+Here's an example: ::
 
   char_to_image = {
     '.': 'dot.png',
@@ -386,10 +392,11 @@ Here's one option: ::
     'G': 'ghost2.png',
   }
 
+Look good? But the ghosts don't move yet...
 
 Next up...
 ----------
 
-In part two of this tutorial we'll get the ghosts moving.
-Move on to :ref:`part2`.
+In part two of this tutorial we'll get the ghosts moving.  Move on to
+:ref:`part2`.
 
