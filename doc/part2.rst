@@ -322,7 +322,7 @@ Add these two lines to the start of the function: ::
         # Record current pos so we can see if the sprite moved
         oldx, oldy = sprite.x, sprite.y
 
-And these two lines at the end: ::
+And these two lines at the end of the function: ::
         
         # Return whether we moved
         return oldx != sprite.x or oldy != sprite.y

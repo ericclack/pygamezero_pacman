@@ -176,12 +176,31 @@ OK, so you should have added this to the top of your program:
 
    BLOCK_SIZE = 32
 
+What size is the world?
+-----------------------
+
+Probably you've noticed that your world doesn't fit in the screen that
+Pygame Zero opens for you. That's because the :code:`WIDTH` and
+:code:`HEIGHT` you've set at the start of your code are unlikely to
+match the world size you've created in your text file.
+
+We can fix this by redoing the constants at the start of your code.
+
+Firstly decide on what size worlds you want to support, then add one
+new constant :code:`WORLD_SIZE` and redefining :code:`WIDTH` and
+:code:`HEIGHT` to use this. Here's an example for a 32x32 world: ::
+
+    WORLD_SIZE = 20
+    BLOCK_SIZE = 32
+    WIDTH = WORLD_SIZE*BLOCK_SIZE
+    HEIGHT = WORLD_SIZE*BLOCK_SIZE  
+   
 Adding the Pac-Man
 ------------------
 
 OK, time to add our Pac-Man sprite. Let's start with an Actor to draw
 the sprite. Add this code just under the set of capitalised constants
-(e.g.  :code:`WORLD_SIZE`):
+(e.g.  :code:`BLOCK_SIZE`):
 
 .. code:: python
           
@@ -347,6 +366,27 @@ you'll agree is worse -- do try it:
             pacman.x += pacman.dx
             pacman.y += pacman.dy
             
+Adding ghosts
+-------------
+
+Let's add some ghosts to our world. Open up your :code:`level-1.txt` file
+and put in some uppercase and lowercase Gs in your world where you want the ghosts.
+
+We now need to pick the images that we want to use for the ghosts. Edit your
+dictionary :code:`char_to_image` to map the G characters the images you want
+to use (which represent the different ghost colours).
+
+Here's one option: ::
+
+  char_to_image = {
+    '.': 'dot.png',
+    '=': 'wall.png',
+    '*': 'power.png',
+    'g': 'ghost1.png',
+    'G': 'ghost2.png',
+  }
+
+
 Next up...
 ----------
 
