@@ -181,6 +181,9 @@ resets each of the ghost positions. Do you notice something new in the
 :code:`for` loop? We use a function called :code:`zip`, but what does
 it do?
 
+Introducing zip
+...............
+
 Let's have a play in the REPL to see how it works...
 
 Click *New* to open a new script and set the *Mode* to Python 3, then
