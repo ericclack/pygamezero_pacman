@@ -36,6 +36,7 @@ char_to_image = {
 def load_level(number):
     file = "level-%s.txt" % number
     pacman.food_left = 0
+    world = []
 
     with open(file) as f:
         for line in f:
@@ -44,6 +45,7 @@ def load_level(number):
                 row.append(block)
                 if block == '.': pacman.food_left += 1
             world.append(row)
+    return world
 
 def set_random_dir(sprite, speed):
     sprite.dx = random.choice([-speed, speed])
@@ -134,7 +136,7 @@ def eat_food():
         pacman.food_left -= 1
         print("Food left: ", pacman.food_left)
 
-def lose_life():
+def reset_sprites():
     pacman.x = pacman.y = 1.5 * BLOCK_SIZE
     # Move ghosts back to their start pos
     for g, (x, y) in zip(ghosts, ghost_start_pos):
@@ -142,14 +144,18 @@ def lose_life():
         g.y = y * BLOCK_SIZE
 
 def update():
+    global world
     move_ahead(pacman)
     eat_food()
+    if pacman.food_left == 170:
+        world = load_level(2)
+        reset_sprites()
 
     for g in ghosts:
         if not move_ahead(g):
             set_random_dir(g, GHOST_SPEED)
         if g.colliderect(pacman):
-            lose_life()
+            reset_sprites()
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
@@ -168,5 +174,5 @@ def on_key_down(key):
         pacman.dy = SPEED
 
 # Game set up
-load_level(1)
+world = load_level(1)
 make_ghost_actors()

@@ -63,7 +63,7 @@ Now go and test and check that it works. You should see in your
 console (in the Mu editor at the bottom of the screen) an update of
 how much food is left each time you eat some.
 
-Better Pac-Man when moving around
+Rotate Pac-Man when moving around
 ---------------------------------
 
 Pac-Man always looks to the right, even when moving down or to the
