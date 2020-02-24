@@ -73,25 +73,33 @@ But first we need to change Pac-Man's anchor point, as if we stick
 with top-left when we rotate him he'll won't stay in place, but move
 into other blocks.
 
-So near the top of your code replace these two lines: ::
+So near the top of your code replace these two lines:
+
+.. code:: python
   
     pacman = Actor('pacman_o.png', anchor=('left', 'top'))
     pacman.x = pacman.y = 1*BLOCK_SIZE
 
-with these two: ::
+with these two:
+
+.. code:: python
   
     pacman = Actor('pacman_o.png')
     pacman.x = pacman.y = 1.5*BLOCK_SIZE
 
 Now we've changed Pac-Man's centre of placement and rotation we need
 to change a bit of maths to keep the collision detection working. In
-function :code:`blocks_ahead_of` replace these lines: ::
+function :code:`blocks_ahead_of` replace these lines:
+
+.. code:: python
 
     # Here's where we want to move to
     x = sprite.x + dx
     y = sprite.y + dy
 
-with these: ::
+with these:
+
+.. code:: python
 
     # Here's where we want to move to, bit of rounding to
     # ensure we get the exact pixel position
@@ -100,11 +108,15 @@ with these: ::
 
 Now we can rotate Pac-Man based on which direction he's moving. In
 function :code:`move_ahead` replace this line at the end of the
-function: ::
+function:
+
+.. code:: python
   
     return oldx != sprite.x or oldy != sprite.y
 
-With these lines: ::
+with these lines:
+
+.. code:: python
   
     moved = (oldx != sprite.x or oldy != sprite.y)
 
@@ -128,13 +140,17 @@ what should happen after a collision? Let's move the ghosts back to where
 they started.
 
 To record the ghosts' start positions add these lines just under
-:code:`ghosts = []` near the top of your code: ::
+:code:`ghosts = []` near the top of your code:
+
+.. code:: python      
 
     # Where do the ghosts start?
     ghost_start_pos = []
 
 Next in function :code:`make_ghost_actors` add this just under
-:code:`ghosts.append(g)`: ::
+:code:`ghosts.append(g)`:
+
+.. code:: python      
 
     ghost_start_pos.append((x,y))
 
@@ -142,12 +158,16 @@ Now we have a list that records the :code:`(x, y)` co-ordinates of
 each ghost. Let's add the collision decetion.
     
 Add this test in the :code:`update` function inside the :code:`for g
-in ghosts` loop: ::
+in ghosts` loop:
+
+.. code:: python
 
     if g.colliderect(pacman):
         lose_life()
 
-Finally add this new function: ::
+Finally add this new function:
+
+.. code:: python
 
     def lose_life():
         pacman.x = pacman.y = 1.5 * BLOCK_SIZE
@@ -166,7 +186,9 @@ Let's have a play in the REPL to see how it works...
 Click *New* to open a new script and set the *Mode* to Python 3, then
 open a RPEL and enter these lines of code (don't type the prompt
 :code:`>>>` and there's no need to type in the comments that start
-with a :code:`#` character): ::
+with a :code:`#` character):
+
+.. code:: python
 
   # Make some lists
   >>> names = [ 'fred', 'bill', 'amy', 'martha' ]
@@ -179,14 +201,18 @@ with a :code:`#` character): ::
   [ 25, 29, 21, 52 ]
 
 So far, no surprises (hopefully!). Now let's try the :code:`zip`
-function: ::
+function:
+
+.. code:: python
 
   # First try of zip
   >>> print(zip(names, ages)
   <zip object at 0x10b699d88>
 
 What's that all about?! Well that's an iterator, which means we need
-to use a :code:`for` loop to use it: ::
+to use a :code:`for` loop to use it:
+
+.. code:: python
 
   # Try zip with a loop
   >>> for i in zip(names, ages): print(i)
@@ -197,7 +223,9 @@ to use a :code:`for` loop to use it: ::
 
 OK! So zip has merged the two lists together and paired up the
 elements. We can extend this a bit further by capturing the name and
-age at the same time: ::
+age at the same time:
+
+.. code:: python
 
   >>> for name, age in zip(names, ages): print(name, "is", age, "years old")
   fred is 25 years old
