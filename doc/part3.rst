@@ -23,19 +23,27 @@ Later, we'll move to the next level when all of the food is gone.
 
 Let's record how much food is left by adding a variable to the
 :code:`pacman` actor object. Add this code just under where you create
-the :code:`pacman` actor: ::
+the :code:`pacman` actor:
 
-    pacman.food_left = None
+.. code:: python
+          
+   pacman.food_left = None
 
-Now add these lines in the function :code:`load_level`: ::
+Now add these lines in the function :code:`load_level`:
 
+.. code:: python
+          
     pacman.food_left = 0
 
-And then inside the :code:`for block` loop we need to spot food blocks like this: ::
+And then inside the :code:`for block` loop we need to spot food blocks like this: 
   
-    if block == '.': pacman.food_left += 1
+.. code:: python
 
-Now let's add a new method to spot and eat food. Add this new method: ::
+   if block == '.': pacman.food_left += 1
+
+Now let's add a new method to spot and eat food. Add this new method:
+
+.. code:: python
     
     def eat_food():
         ix,iy = int(pacman.x / BLOCK_SIZE), int(pacman.y / BLOCK_SIZE)
@@ -45,8 +53,10 @@ Now let's add a new method to spot and eat food. Add this new method: ::
             print("Food left: ", pacman.food_left)
 
 Finally, call this new method in the :code:`update` function after the
-line :code:`move_ahead(pacman)`: ::
+line :code:`move_ahead(pacman)`:
 
+.. code:: python
+          
     eat_food()
 
 Now go and test and check that it works. You should see in your
