@@ -3,8 +3,9 @@
 Part 3
 ======
 
-This part is in note form at the moment. Feel free to try the code out
-to see what happens...
+In part 3 we're going to get Pac-Man eating the food on the screen,
+make him turn properly as we move him about the world, and add
+collision detection for the ghosts.
 
 Food for Pac-Man
 ----------------
@@ -152,42 +153,50 @@ it do?
 
 Let's have a play in the REPL to see how it works...
 
-Open a new Script and set the Mode to Python 3, then open a RPEL and
-enter these lines of code (don't type the prompt :code:`>>>` and
-there's no need to type in the comments that start with a :code:`#`
-character): ::
+Click *New* to open a new script and set the *Mode* to Python 3, then
+open a RPEL and enter these lines of code (don't type the prompt
+:code:`>>>` and there's no need to type in the comments that start
+with a :code:`#` character): ::
 
   # Make some lists
   >>> names = [ 'fred', 'bill', 'amy', 'martha' ]
   >>> ages = [ 25, 29, 21, 52 ]
 
+  # Display the lists
   >>> print(names)
   ['fred', 'bill', 'amy', 'martha']
   >>> print(ages)
   [ 25, 29, 21, 52 ]
 
-So far, no surprises (hopefully!). Now let's try the :code:`zip` function: ::
+So far, no surprises (hopefully!). Now let's try the :code:`zip`
+function: ::
 
+  # First try of zip
   >>> print(zip(names, ages)
   <zip object at 0x10b699d88>
 
-What's that all about?! Well that's an interator, which means we need to use
-a :code:`for` loop to use it: ::
+What's that all about?! Well that's an iterator, which means we need
+to use a :code:`for` loop to use it: ::
 
+  # Try zip with a loop
   >>> for i in zip(names, ages): print(i)
   ('fred', 25)
   ('bill', 29)
   ('amy', 21)
   ('martha', 52)
 
-OK! So zip has merged the two lists together and paired up the elements. We can extend this
-a bit further by capturing the name and age at the same time: ::
+OK! So zip has merged the two lists together and paired up the
+elements. We can extend this a bit further by capturing the name and
+age at the same time: ::
 
   >>> for name, age in zip(names, ages): print(name, "is", age, "years old")
   fred is 25 years old
   bill is 29 years old
   amy is 21 years old
   martha is 52 years old
+
+Make sense? OK :) Don't forget to change your game *Mode* back to
+PygameZero.
         
 Next up...
 ----------
