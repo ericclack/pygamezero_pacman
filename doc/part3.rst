@@ -3,9 +3,10 @@
 Part 3
 ======
 
-In part 3 we're going to get Pac-Man eating the food on the screen,
-make him turn properly as we move him about the world, and add
-collision detection for the ghosts. Finally we'll add the next level.
+In part 3 we're going to let Pac-Man eat the food on the screen, make
+him turn properly as we move him about the world, and add collision
+detection for the ghosts. Finally we'll add code to move the next
+level when all of the food is eaten. 
 
 Food for Pac-Man
 ----------------
@@ -282,16 +283,68 @@ steps. See if you can come up with them before reading on further.
 
 OK, here's the list, how does it compare with yours?
 
-1. Create the next world text file :code:`level-2.txt`
-2. Load in the next world text file
-3. Reset all the sprites
-4. Capture the ghost positions
+1. Record the level we're on, starting at 1
+2. Create the next world text file :code:`level-2.txt`
+3. Check when all of the food is gone
+4. Increment the level by 1
+5. Load in the next world text file
+6. Capture the ghost positions
+7. Reset all the sprites
 
+We can store the current level on the :code:`pacman` sprite as we
+did for :code:`food_left`. Add this line just after you've created
+the Pac-Man sprite:
+
+.. code:: python
+
+    pacman.level = 1
+   
+Now let's put the rest of the next-level work in a new functin called :code:`next_level`:
+
+.. code:: python
+
+    def next_level():
+        global world, ghosts, ghost_start_pos
+
+        world = []
+        ghosts = []
+        ghost_start_pos = []
+
+        pacman.level += 1
+        load_level(pacman.level)
+        make_ghost_actors()
+
+        reset_sprites()
+
+Finally we just need to determine when to call this new
+function. There are two places. In :code:`update` add these lines just
+under the call to :code:`eat_food()`:
+
+.. code:: python
+
+    if pacman.food_left == 0:
+        next_level()
+
+And for our test mode, add these lines at the end of the function
+:code:`on_key_up`:
+
+.. code:: python
+
+    if TEST_MODE:
+        # Put special key commands here
+        if key == keys.N:
+            next_level()
+
+Now as long as :code:`TEST_MODE` is :code:`True` we can press N to go
+to the next level.
 
 
 Next up...
 ----------
 
- * tbc
+* End the game when lives run out
+* Power ups and chasing ghosts
+* Better animations e.g. when Pac-Man loses a life
+* ...
 
 .. _code for part 3: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman3.py

@@ -7,8 +7,8 @@ BLOCK_SIZE = 32
 WIDTH = WORLD_SIZE*BLOCK_SIZE
 HEIGHT = WORLD_SIZE*BLOCK_SIZE
 
-SPEED = 2
-GHOST_SPEED = 1
+SPEED = 4
+GHOST_SPEED = 2
 
 # An array containing the world tiles
 world = []
