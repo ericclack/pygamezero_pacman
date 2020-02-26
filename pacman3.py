@@ -1,5 +1,7 @@
 import random
 
+TEST_MODE = True
+
 WORLD_SIZE = 20
 BLOCK_SIZE = 32
 WIDTH = WORLD_SIZE*BLOCK_SIZE
@@ -17,6 +19,7 @@ pacman.x = pacman.y = 1.5*BLOCK_SIZE
 # Direction that we're going in
 pacman.dx, pacman.dy = 0,0
 pacman.food_left = None
+pacman.level = 1
 
 # An array of ghosts
 ghosts = []
@@ -36,7 +39,6 @@ char_to_image = {
 def load_level(number):
     file = "level-%s.txt" % number
     pacman.food_left = 0
-    world = []
 
     with open(file) as f:
         for line in f:
@@ -45,7 +47,6 @@ def load_level(number):
                 row.append(block)
                 if block == '.': pacman.food_left += 1
             world.append(row)
-    return world
 
 def set_random_dir(sprite, speed):
     sprite.dx = random.choice([-speed, speed])
@@ -143,13 +144,24 @@ def reset_sprites():
         g.x = x * BLOCK_SIZE
         g.y = y * BLOCK_SIZE
 
+def next_level():
+    global world, ghosts, ghost_start_pos
+
+    world = []
+    ghosts = []
+    ghost_start_pos = []
+
+    pacman.level += 1
+    load_level(pacman.level)
+    make_ghost_actors()
+
+    reset_sprites()
+
 def update():
-    global world
     move_ahead(pacman)
     eat_food()
-    if pacman.food_left == 170:
-        world = load_level(2)
-        reset_sprites()
+    if pacman.food_left == 0:
+        next_level()
 
     for g in ghosts:
         if not move_ahead(g):
@@ -163,6 +175,12 @@ def on_key_up(key):
     if key in (keys.UP, keys.DOWN):
         pacman.dy = 0
 
+    if TEST_MODE:
+        # Put special key commands here
+        if key == keys.N:
+            next_level()
+
+
 def on_key_down(key):
     if key == keys.LEFT:
         pacman.dx = -SPEED
@@ -174,5 +192,5 @@ def on_key_down(key):
         pacman.dy = SPEED
 
 # Game set up
-world = load_level(1)
+load_level(1)
 make_ghost_actors()

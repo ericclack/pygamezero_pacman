@@ -5,7 +5,7 @@ Part 3
 
 In part 3 we're going to get Pac-Man eating the food on the screen,
 make him turn properly as we move him about the world, and add
-collision detection for the ghosts.
+collision detection for the ghosts. Finally we'll add the next level.
 
 Food for Pac-Man
 ----------------
@@ -255,6 +255,40 @@ age at the same time:
 Make sense? OK :) Don't forget to change your game *Mode* back to
 PygameZero.
         
+Next Level
+----------
+
+Earlier we added code to track how much food was left. Let's use this
+to move to the next level when all of the food is gone.
+
+One other thing to consider: we need to test our game and it will take
+ages if we have to actually eat all of the food each time we want
+to get to the next level, so let's add a *test mode* to the game. Add
+this line at the top of your code:
+
+.. code:: python
+
+   TEST_MODE = True
+
+Now let's do the work of moving to the next level. Have a think about
+what we need to do to acheive this... there are actually quite a few
+steps. See if you can come up with them before reading on further.
+
+...
+
+...
+
+...
+
+OK, here's the list, how does it compare with yours?
+
+1. Create the next world text file :code:`level-2.txt`
+2. Load in the next world text file
+3. Reset all the sprites
+4. Capture the ghost positions
+
+
+
 Next up...
 ----------
 
