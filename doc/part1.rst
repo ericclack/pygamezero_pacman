@@ -34,20 +34,24 @@ Creating the text file
 ......................
 
 So create a text file in your favourite editor and use the equals sign
-to draw some walls, for example: ::
+to draw some walls for your world, for example: ::
 
-  ====================
+  ========== =========
   =                  =
   ==========         =
-  =                  =
+                    
   =    ===============
   =                  =
-  ====================
+  ========== =========
 
-Save this file in the same directory as where you saved :code:`pacman.py`. Call the
-file :code:`level-1.txt`.
+Did you notice we left some gaps for our characters to move from one
+side to the other for a quick escape?
 
-Now let's try reading that file in your python code. Add this empty array to contain the world:
+Save this file in the same directory as where you saved
+:code:`pacman.py`. Call the file :code:`level-1.txt`.
+
+Now let's try reading that file in your python code. Add this empty
+array to contain the world:
 
 .. code:: python
 
@@ -82,8 +86,34 @@ in your console: ::
 
 That's python's way of printing a list and it means that your code
 loaded your world from the text file. Each element in the list is a
-character at a specific location in your world. The next step is to
-draw this on the screen.
+character at a specific location in your world. 
+
+How reading a file works
+........................
+
+In our code above we use :code:`with open(file) as f:` to open and
+begin the process of reading the contents of our level file. Let's
+look at what that line of code does:
+
+* First the :code:`with` statement tells python that we are going to
+  supply a block of code that will work on the file we're about to
+  open -- we mark this by block by indenting the lines that follow.
+* At the end of this block python will tidy up for us by closing
+  the file automatically. 
+* :code:`open(file)` opens the file for reading (rather than writing)
+* :code:`as f` stores a reference to the file in the variable
+  :code:`f`.
+
+Inside the block we can then use a simple :code:`for` loop to iterate
+over the lines in the file referenced in :code:`f`. Each line has a
+newline at the end of it (your editor's way of marking a new line of
+text) and we can strip this off with :code:`line.strip()`.
+
+Finally another loop get each character from the line of the file and
+stores it away for later refence.
+
+The next step is to draw this on the screen...
+
 
 Drawing the world
 -----------------
@@ -197,6 +227,8 @@ Here's an example for a 32x32 world: ::
     WIDTH = WORLD_SIZE*BLOCK_SIZE
     HEIGHT = WORLD_SIZE*BLOCK_SIZE  
 
+Did you notice that this code only supports square worlds? Let's
+go with that for now to keep things simpler. 
     
 Adding the Pac-Man
 ------------------
@@ -275,10 +307,9 @@ set :code:`pacman.x` and :code:`pacman.y`:
     # Direction that we're going in
     pacman.dx, pacman.dy = 0,0          
 
-Right, now press Play to test. You should be a bit disappointed --
-our pacman no longer moves. We are tracking which direction the
-player wants to move in but we are not using this information
-anywhere.
+Right, now press Play to test. You'll be a bit disappointed -- our
+pacman no longer moves. We are tracking which direction the player
+wants to move in but we are not using this information anywhere.
 
 It's time to add an :code:`update` function to fix this.
 
@@ -331,10 +362,10 @@ There's a lot going on in that function! Let's break it down:
    direction :code:`dx,dy` to his :code:`x,y` position.
  * Then we need to convert this destination :code:`x,y` position into
    a block position in our world array, simply by dividing by BLOCK_SIZE.
- * However, arrays always take integers indexes -- we can't look up
-   world[1.6][1.0] as that doesn't make any sense to Python -- so we
-   set array indexes :code:`ix,iy` to the integer part of the division
-   and round down, so (1.6, 1.0) would become (1, 1).
+ * However, arrays always take integer indexes (whole numbers) -- we
+   can't look up world[1.6][1.0] as that doesn't make any sense to
+   Python -- so we set array indexes :code:`ix,iy` to the integer part
+   of the division and round down, so (1.6, 1.0) would become (1, 1).
  * We determine any remainder so that we check adjacent blocks, in the
    example above, :code:`rx` would be a positive number and :code:`ry`
    would be zero.

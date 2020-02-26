@@ -35,13 +35,29 @@ Now add these lines in the function :code:`load_level`:
           
     pacman.food_left = 0
 
-And then inside the :code:`for block` loop we need to spot food blocks like this: 
+And then inside the :code:`for block` loop in the function
+:code:`load_level` we need to spot food blocks like this:
   
 .. code:: python
 
    if block == '.': pacman.food_left += 1
 
-Now let's add a new method to spot and eat food. Add this new method:
+Your function should now look like this:
+
+.. code:: python
+
+    def load_level(number):
+        file = "level-%s.txt" % number
+        pacman.food_left = 0
+        with open(file) as f:
+            for line in f:
+                row = []
+                for block in line.strip():
+                    row.append(block)
+                    if block == '.': pacman.food_left += 1
+                world.append(row)          
+   
+Now let's add a new method to spot and eat food:
 
 .. code:: python
     

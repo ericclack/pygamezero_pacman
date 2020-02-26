@@ -191,7 +191,8 @@ So that the complete function looks like this:
                 g.y += g.dy          
 
 Now we have some good ghost movement, but if you leave it running for
-a bit chances are you'll get an error like this: ::
+a bit chances are you'll get an error like this (assuming you left
+gaps in your walls): ::
 
   IndexError: list index out of range
 
