@@ -357,7 +357,7 @@ In the next part of this tutorial we'll work on:
 
  * Pac-Man eating the food
  * Ghosts killing Pac-Man
- * Power up pills.
+ * Moving to the next level. 
 
 Move on to :ref:`part3`.
 
