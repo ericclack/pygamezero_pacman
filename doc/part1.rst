@@ -270,9 +270,9 @@ Moving through the maze
 Try this out. You'll see that our Pac-Man moves very jerkily across the
 screen, and has no regard for walls. We can do better than this.
 
-If we change :code:`BLOCK_SIZE` to a smaller value such as 1, then our
-character certainly moves slower, but you have to tap the arrow key so
-movement is still a problem.
+If we remove :code:`BLOCK_SIZE` (which is 32) and use a smaller number
+instead, such as 1, then our character certainly moves slower, but you
+have to tap the arrow key so movement is still a problem.
 
 We can fix this by adding another key event function:
 :code:`on_key_up` so that we track key presses *and* releases. Change
