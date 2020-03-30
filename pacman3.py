@@ -141,8 +141,7 @@ def reset_sprites():
     pacman.x = pacman.y = 1.5 * BLOCK_SIZE
     # Move ghosts back to their start pos
     for g, (x, y) in zip(ghosts, ghost_start_pos):
-        g.x = x * BLOCK_SIZE
-        g.y = y * BLOCK_SIZE
+        animate(g, pos=(x * BLOCK_SIZE, y * BLOCK_SIZE))
 
 def next_level():
     global world, ghosts, ghost_start_pos

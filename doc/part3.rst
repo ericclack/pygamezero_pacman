@@ -204,7 +204,7 @@ Introducing zip
 Let's have a play in the REPL to see how it works...
 
 Click *New* to open a new script and set the *Mode* to Python 3, then
-open a RPEL and enter these lines of code (don't type the prompt
+open a REPL and enter these lines of code (don't type the prompt
 :code:`>>>` and there's no need to type in the comments that start
 with a :code:`#` character):
 
@@ -338,10 +338,19 @@ And for our test mode, add these lines at the end of the function
 Now as long as :code:`TEST_MODE` is :code:`True` we can press N to go
 to the next level.
 
+Enjoy your game
+---------------
+
+Congratulations for getting this far! You've worked hard and we have
+covered a lot of new techniques, so take a bit of time to relax and
+enjoy playing your game ... which is beginning to be quite playable
+now.
+
 
 Next up...
 ----------
 
+* Add a score
 * End the game when lives run out
 * Power ups and chasing ghosts
 * Better animations e.g. when Pac-Man loses a life

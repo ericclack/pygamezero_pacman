@@ -9,11 +9,22 @@ you'll learn how to read files in Python.
 .. image:: images/pacman-screenshot.png
            :width: 400
 
-If you've not yet set up Pygame Zero and the editor Mu, head over to the Flappy Bird Tutorial and follow the instructions there: https://tinyurl.com/y37qxb5h
+If you've not yet set up Pygame Zero and the editor Mu, head over to
+the Flappy Bird Tutorial and follow the instructions there:
+https://tinyurl.com/y37qxb5h
+
+If you've not dome much Python programming then that Flappy Bird
+tutorial is a good place to start -- this tutorial is significantly
+harder. 
 
 Installing Assets
 -----------------
-Download the tutorial assets by |location_link|. You can close that page once the download finishes. Click on the **Images** button in the Mu editor.  This will open the directory where Pygame Zero looks for images.  Copy the images from the **images.zip** file you just downloaded into this directory.
+
+Download the tutorial assets by |location_link|. You can close that
+page once the download finishes. Click on the **Images** button in the
+Mu editor.  This will open the directory where Pygame Zero looks for
+images.  Copy the images from the **images.zip** file you just
+downloaded into this directory.
 
 .. |location_link| raw:: html
 

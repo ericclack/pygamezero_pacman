@@ -4,7 +4,7 @@ Part 1
 ======
 
 In part 1 we're going to create a game world in a text file, read and
-process it in python, then draw it on the screen.
+process it in Python, then draw it on the screen.
 
 Getting Started
 ---------------
@@ -50,7 +50,7 @@ side to the other for a quick escape?
 Save this file in the same directory as where you saved
 :code:`pacman.py`. Call the file :code:`level-1.txt`.
 
-Now let's try reading that file in your python code. Add this empty
+Now let's try reading that file in your Python code. Add this empty
 array to contain the world:
 
 .. code:: python
@@ -84,7 +84,7 @@ in your console: ::
   [['=', '=', '=', '=', '=', '=', '=', '=', '=', ' ', ' ', '=', '=', '=', '=', '=', '=', '=', '=', '='], ['=', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '='],
   ...
 
-That's python's way of printing a list and it means that your code
+That's Python's way of printing a list and it means that your code
 loaded your world from the text file. Each element in the list is a
 character at a specific location in your world. 
 
@@ -95,10 +95,10 @@ In our code above we use :code:`with open(file) as f:` to open and
 begin the process of reading the contents of our level file. Let's
 look at what that line of code does:
 
-* First the :code:`with` statement tells python that we are going to
+* First the :code:`with` statement tells Python that we are going to
   supply a block of code that will work on the file we're about to
   open -- we mark this by block by indenting the lines that follow.
-* At the end of this block python will tidy up for us by closing
+* At the end of this block Python will tidy up for us by closing
   the file automatically. 
 * :code:`open(file)` opens the file for reading (rather than writing)
 * :code:`as f` stores a reference to the file in the variable
