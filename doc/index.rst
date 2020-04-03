@@ -13,9 +13,9 @@ If you've not yet set up Pygame Zero and the editor Mu, head over to
 the Flappy Bird Tutorial and follow the instructions there:
 https://tinyurl.com/y37qxb5h
 
-If you've not dome much Python programming then that Flappy Bird
-tutorial is a good place to start -- this tutorial is significantly
-harder. 
+If you're new to Python programming then that Flappy Bird tutorial is
+probably better place to start -- this tutorial is significantly
+harder.
 
 Installing Assets
 -----------------

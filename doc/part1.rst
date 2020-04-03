@@ -4,7 +4,9 @@ Part 1
 ======
 
 In part 1 we're going to create a game world in a text file, read and
-process it in Python, then draw it on the screen.
+process it in Python, then draw it on the screen. By the end of this
+first part you'll have something that looks a lot like Pac-Mac, except
+that only your character can move about the maze. 
 
 Getting Started
 ---------------
@@ -27,7 +29,7 @@ You should see a new, empty window appear.
 Making a game world
 -------------------
 
-We're going to store a game world in a text file. This means you can
+We're going to store your game world in a text file. This means you can
 design your own levels and also you'll get to learn about working with
 files in Python - a really useful skill.
 
@@ -40,7 +42,7 @@ to draw some walls for your world, for example: ::
   ========== =========
   =                  =
   ==========         =
-                    
+                      
   =    ===============
   =                  =
   ========== =========
@@ -79,8 +81,8 @@ your code:
           load_level(1)
           print(world)
 
-If you typed the code in correctly then you'll see something like this
-in your console: ::
+If you typed the code in correctly then when you press *Play* you'll
+see something like this in your console: ::
 
   [['=', '=', '=', '=', '=', '=', '=', '=', '=', ' ', ' ', '=', '=', '=', '=', '=', '=', '=', '=', '='], ['=', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '='],
   ...
@@ -89,9 +91,9 @@ That's Python's way of printing a list and it means that your code
 loaded your world from the text file. Each element in the list is a
 character at a specific location in your world.
 
-If this didn't work it could be that your code and level files are not
-in the right place. Check that they are both in your :code:`mu_code`
-directory.
+If this didn't work, and you didn't make any typos, it could be that
+your code and level files are not in the right place. Check that they
+are both in your :code:`mu_code` directory.
 
 How reading a file works
 ........................
@@ -110,12 +112,12 @@ look at what that line of code does:
   :code:`f`.
 
 Inside the block we can then use a simple :code:`for` loop to iterate
-over the lines in the file referenced in :code:`f`. Each line has a
-newline at the end of it (your editor's way of marking a new line of
-text) and we can strip this off with :code:`line.strip()`.
+over the lines in the file referenced in variable :code:`f`. Each line
+has a newline at the end of it (your editor's way of marking a new
+line of text) and we can strip this off with :code:`line.strip()`.
 
-Finally another loop get each character from the line of the file and
-stores it away for later refence.
+Finally another loop get each character from the each line of the file
+and stores it away for later refence.
 
 The next step is to draw this on the screen...
 
@@ -146,11 +148,12 @@ Trying out dictionaries in the REPL
 ...................................
 
 Let's switch to the REPL to see how this dictionary works. First
-change your game mode to Python3--click the Mode icon to do this--then
-click the Run button and you'll get a :code:`>>>` prompt at the bottom
-of the screen.
+change your game mode to *Python3*--click the *Mode* icon to do
+this--then click the *Run* button and you'll get a :code:`>>>` prompt
+at the bottom of the screen.
 
-Try typing the following and see if you understand what's going on (don't type the :code:`>>>` characters) ...
+Try typing the following and see if you understand what's going on
+(don't type the :code:`>>>` characters) ...
 
 .. code:: python
 
@@ -165,8 +168,7 @@ Try typing the following and see if you understand what's going on (don't type t
           
 
 :code:`KeyError` means that '!' is not found in the dictionary, it is
-not a valid key because we've not set it in the definition of
-:code:`char_to_image`.
+not a valid key because we've note added it to :code:`char_to_image`.
 
 OK, make sense? Switch the game mode back to PygameZero, then
 continue...
@@ -174,9 +176,12 @@ continue...
 From characters to images
 .........................
 
-Add the method below to draw the world. It iterates through the rows
-in the world, then the blocks in each row and draws the right image
-for the character it finds.
+Do you remember from previous tutorials that PygameZero expects us to
+define a :code:`draw` method to draw the game on the screen? Let's add
+this method now, you can see the code below.
+
+The code iterates through the rows in the world, then the blocks in
+each row and draws the right image for the character it finds.
 
 We use :code:`enumerate` so that we get each item in the world *and*
 its index in the array, which gives us the right x and y co-ordinates
@@ -205,7 +210,8 @@ Can you fix the error yourself? Try first before scrolling down.
 
 ...
 
-OK, so you should have added this to the top of your program:
+OK, so you should have spotted that we've not yet defined
+:code:`BLOCK_SIZE`. Add this to the top of your program:
 
 .. code:: python
 
@@ -214,15 +220,15 @@ OK, so you should have added this to the top of your program:
 What size is the world?
 -----------------------
 
-You've probably noticed that your world doesn't perfectly fit in game
-window. That's because the :code:`WIDTH` and :code:`HEIGHT` you've set
-at the start of your code are unlikely to match the world size stored
-in your text file.
+You've probably noticed that your world doesn't perfectly fit in the
+game window. That's because the :code:`WIDTH` and :code:`HEIGHT`
+you've set at the start of your code are unlikely to match the world
+size stored in your text file.
 
-We can fix this by redefining the constants at the start of your code.
+We can fix this by changing the constants at the start of your code.
 
-Firstly decide on what size worlds you want to support, then add one
-new constant :code:`WORLD_SIZE` and redefine :code:`WIDTH` and
+Firstly decide on what size world you want to support, then add one
+new constant :code:`WORLD_SIZE` and set :code:`WIDTH` and
 :code:`HEIGHT` to use this.
 
 Here's an example for a 32x32 world: ::
@@ -254,11 +260,13 @@ And add this line to the end of your :code:`draw` function:
 
     pacman.draw()
 
-This places Pac-Man at the top left of the screen. Now let's think about movement.
-We've seen code similar to this in previous tutorials:
+This places Pac-Man at the top left of the screen. 
 
 Moving through the maze
 .......................
+
+Now let's think about movement.  We've seen code similar to this in
+previous tutorials:
 
 .. code:: python
 
@@ -324,8 +332,8 @@ It's time to add an :code:`update` function to fix this.
         pacman.x += pacman.dx
         pacman.y += pacman.dy
 
-Yay! Now it moves, and smoothly, and diagonally if you hold down two
-arrow keys!
+Yay! Now Pac-Man moves, and smoothly, and diagonally if you hold down
+two arrow keys!
 
 OK, time to add some collision detection...
 
@@ -338,7 +346,8 @@ game world is a series of blocks, Pac-Man can move in pixels. This
 means that he could potentially collide with up to four blocks at any
 one time, and we need to check all of them.
 
-Let's add a new function to check what's ahead of Pac-Man:
+Let's add a new function to check what's ahead of Pac-Man. Ahead is basically
+Pac-Man's current position plus the direction in `dx,dy`:
 
 .. code:: python
 
@@ -414,7 +423,7 @@ you want the ghosts to appear.
 
 We now need to pick the images that we want to use for the
 ghosts. Edit your dictionary :code:`char_to_image` to map the G
-characters the images you want to use (which represent the different
+characters to the images you want to use (which represent the different
 ghost colours). You can see all the images available by clicking the
 *Images* button on the toolbar.
 
@@ -433,6 +442,6 @@ Look good? But the ghosts don't move yet...
 Next up...
 ----------
 
-In part two of this tutorial we'll get the ghosts moving.  Move on to
+In part two of this tutorial we'll get the ghosts moving. Move on to
 :ref:`part2`.
 
