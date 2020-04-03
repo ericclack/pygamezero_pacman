@@ -17,7 +17,8 @@ Getting Started
     HEIGHT = 640
     TITLE = 'Pac-Man'
 
-- Press **Save** and save the file as :code:`pacman.py`
+- Press **Save** and save the file as :code:`pacman.py` in your
+  :code:`mu_code` directory.
 
 - press **Play** to see what this code does.
 
@@ -48,7 +49,7 @@ Did you notice we left some gaps for our characters to move from one
 side to the other for a quick escape?
 
 Save this file in the same directory as where you saved
-:code:`pacman.py`. Call the file :code:`level-1.txt`.
+:code:`pacman.py`. Call the file :code:`level-1.txt`. 
 
 Now let's try reading that file in your Python code. Add this empty
 array to contain the world:
@@ -86,7 +87,11 @@ in your console: ::
 
 That's Python's way of printing a list and it means that your code
 loaded your world from the text file. Each element in the list is a
-character at a specific location in your world. 
+character at a specific location in your world.
+
+If this didn't work it could be that your code and level files are not
+in the right place. Check that they are both in your :code:`mu_code`
+directory.
 
 How reading a file works
 ........................
