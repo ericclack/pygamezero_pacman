@@ -19,9 +19,12 @@ pacman = Actor('pacman_o.png')
 pacman.x = pacman.y = 1.5*BLOCK_SIZE
 # Direction that we're going in
 pacman.dx, pacman.dy = 0,0
+# Other game variables
 pacman.food_left = None
 pacman.level = 1
 pacman.powerup = False
+pacman.score = 0
+pacman.lives = 3
 
 # An array of ghosts
 ghosts = []
@@ -52,8 +55,8 @@ def load_level(number):
 
 def new_ghost_direction(g):
     if pacman.powerup:
-        g.dx = math.copysign(GHOST_SPEED*1.5, g.x- pacman.x)
-        g.dy = math.copysign(GHOST_SPEED*1.5, g.y- pacman.y)
+        g.dx = math.copysign(GHOST_SPEED*1.5, g.x - pacman.x)
+        g.dy = math.copysign(GHOST_SPEED*1.5, g.y - pacman.y)
     else:
         g.dx = random.choice([-GHOST_SPEED, GHOST_SPEED])
         g.dy = random.choice([-GHOST_SPEED, GHOST_SPEED])
@@ -80,6 +83,8 @@ def draw():
                 screen.blit(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE))
     pacman.draw()
     for g in ghosts: g.draw()
+    screen.draw.text("Score: %s" % pacman.score, topleft=(8, 4), fontsize=40)
+    screen.draw.text("Lives: %s" % pacman.lives, topright=(WIDTH-8,4), fontsize=40)
 
 def blocks_ahead_of(sprite, dx, dy):
     """Return a list of tiles at this position + delta"""
@@ -141,11 +146,12 @@ def eat_food():
     if world[iy][ix] == '.':
         world[iy][ix] = None
         pacman.food_left -= 1
-        print("Food left: ", pacman.food_left)
+        pacman.score += 1
     elif world[iy][ix] == '*':
         world[iy][ix] = None
         pacman.powerup = True
         for g in ghosts: new_ghost_direction(g)
+        pacman.score += 5
 
 def reset_sprites():
     pacman.x = pacman.y = 1.5 * BLOCK_SIZE
@@ -176,7 +182,12 @@ def update():
         if not move_ahead(g):
             new_ghost_direction(g)
         if g.colliderect(pacman):
-            reset_sprites()
+            if pacman.powerup:
+                # Kill a ghost
+                pass
+            else:
+                # Lose a life
+                reset_sprites()
 
 def on_key_up(key):
     if key in (keys.LEFT, keys.RIGHT):
