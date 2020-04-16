@@ -50,9 +50,13 @@ def load_level(number):
                 if block == '.': pacman.food_left += 1
             world.append(row)
 
-def set_random_dir(sprite, speed):
-    sprite.dx = random.choice([-speed, speed])
-    sprite.dy = random.choice([-speed, speed])
+def new_ghost_direction(g):
+    if pacman.powerup:
+        g.dx = math.copysign(GHOST_SPEED*1.5, g.x- pacman.x)
+        g.dy = math.copysign(GHOST_SPEED*1.5, g.y- pacman.y)
+    else:
+        g.dx = random.choice([-GHOST_SPEED, GHOST_SPEED])
+        g.dy = random.choice([-GHOST_SPEED, GHOST_SPEED])
 
 def make_ghost_actors():
     for y, row in enumerate(world):
@@ -60,7 +64,7 @@ def make_ghost_actors():
             if block in ['g', 'G']:
                 # Make the sprite in the correct position
                 g = Actor(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE), anchor=('left', 'top'))
-                set_random_dir(g, GHOST_SPEED)
+                new_ghost_direction(g)
 
                 ghosts.append(g)
                 ghost_start_pos.append((x,y))
@@ -132,10 +136,6 @@ def move_ahead(sprite):
         sprite.angle = a
     return moved
 
-def ghost_run_away(g):
-    g.dx = math.copysign(GHOST_SPEED, g.x- pacman.x)
-    g.dy = math.copysign(GHOST_SPEED, g.y- pacman.y)
-
 def eat_food():
     ix,iy = int(pacman.x / BLOCK_SIZE), int(pacman.y / BLOCK_SIZE)
     if world[iy][ix] == '.':
@@ -145,7 +145,7 @@ def eat_food():
     elif world[iy][ix] == '*':
         world[iy][ix] = None
         pacman.powerup = True
-        for g in ghosts: ghost_run_away(g)
+        for g in ghosts: new_ghost_direction(g)
 
 def reset_sprites():
     pacman.x = pacman.y = 1.5 * BLOCK_SIZE
@@ -174,7 +174,7 @@ def update():
 
     for g in ghosts:
         if not move_ahead(g):
-            set_random_dir(g, GHOST_SPEED)
+            new_ghost_direction(g)
         if g.colliderect(pacman):
             reset_sprites()
 
