@@ -354,6 +354,7 @@ Next up...
 * End the game when lives run out
 * Power ups and chasing ghosts
 * Better animations e.g. when Pac-Man loses a life
-* ...
+
+Move on to :ref:`part4`
 
 .. _code for part 3: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman3.py
