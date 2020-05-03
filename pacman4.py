@@ -10,6 +10,7 @@ HEIGHT = WORLD_SIZE*BLOCK_SIZE
 
 SPEED = 4
 GHOST_SPEED = 2
+POWER_UP_START = 25
 
 # An array containing the world tiles
 world = []
@@ -22,7 +23,7 @@ pacman.dx, pacman.dy = 0,0
 # Other game variables
 pacman.food_left = None
 pacman.level = 1
-pacman.powerup = False
+pacman.powerup = 0
 pacman.score = 0
 pacman.lives = 3
 
@@ -30,6 +31,14 @@ pacman.lives = 3
 ghosts = []
 # Where do the ghosts start?
 ghost_start_pos = []
+
+# Banner to display?
+pacman.banner = None
+pacman.banner_counter = 0
+
+def set_banner(message, count):
+    pacman.banner = message
+    pacman.banner_counter = count
 
 # Your level will contain characters, they map
 # to the following images
@@ -39,6 +48,8 @@ char_to_image = {
     '*': 'power.png',
     'g': 'ghost1.png',
     'G': 'ghost2.png',
+    'h': 'ghost3.png',
+    'H': 'ghost4.png',
 }
 
 def load_level(number):
@@ -64,9 +75,11 @@ def new_ghost_direction(g):
 def make_ghost_actors():
     for y, row in enumerate(world):
         for x, block in enumerate(row):
-            if block in ['g', 'G']:
+            if block in ['g', 'G', 'h', 'H']:
                 # Make the sprite in the correct position
                 g = Actor(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE), anchor=('left', 'top'))
+                g.orig_image = g.image
+                g.alt_image = 'ghost5.png'
                 new_ghost_direction(g)
 
                 ghosts.append(g)
@@ -85,6 +98,11 @@ def draw():
     for g in ghosts: g.draw()
     screen.draw.text("Score: %s" % pacman.score, topleft=(8, 4), fontsize=40)
     screen.draw.text("Lives: %s" % pacman.lives, topright=(WIDTH-8,4), fontsize=40)
+    screen.draw.text('Hello!', center=(WIDTH/2, HEIGHT/2), fontsize=120)
+
+
+    if pacman.banner and pacman.banner_counter > 0:
+        screen.draw.text(pacman.banner, center=(WIDTH/2, HEIGHT/2), fontsize=120)
 
 def blocks_ahead_of(sprite, dx, dy):
     """Return a list of tiles at this position + delta"""
@@ -149,7 +167,8 @@ def eat_food():
         pacman.score += 1
     elif world[iy][ix] == '*':
         world[iy][ix] = None
-        pacman.powerup = True
+        pacman.powerup = POWER_UP_START
+        set_banner("Power Up!", 5)
         for g in ghosts: new_ghost_direction(g)
         pacman.score += 5
 
@@ -187,6 +206,11 @@ def update():
                 pass
             else:
                 # Lose a life
+                pacman.lives -= 1
+                if pacman.lives > 0:
+                    set_banner("Ouch!", 5)
+                else:
+                    set_banner("Game Over", 25)
                 reset_sprites()
 
 def on_key_up(key):
@@ -210,6 +234,22 @@ def on_key_down(key):
     if key == keys.DOWN:
         pacman.dy = SPEED
 
+def periodic():
+    if pacman.powerup > 0:
+        pacman.powerup -= 1
+        # Flash the ghosts by swapping images
+        for g in ghosts:
+            # Last switch? Then switch back to original image if we need to
+            if pacman.powerup == 0:
+                if g.image != g.orig_image:
+                    g.image, g.alt_image = g.alt_image, g.image
+            else:
+                g.image, g.alt_image = g.alt_image, g.image
+
+    if pacman.banner_counter > 0:
+        pacman.banner_counter -= 1
+
 # Game set up
 load_level(1)
 make_ghost_actors()
+clock.schedule_interval(periodic, 0.2)

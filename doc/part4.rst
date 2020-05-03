@@ -7,6 +7,96 @@ Part 4 is a work in progress, so at the moment this page is just a
 bunch of notes. Feel free to have a read through and see what you can
 discover.
 
+Tell the user what's happening
+------------------------------
+
+Let's add a way to tell the user what's just happened by displaying
+a big banner on the screen. As well as displaying nice big text
+we also need to consider how long we want the banner to be displayed.
+
+If you've completed our other tutorials (Flappy Bird and Candy Crush)
+you'll know that we can use :code:`screen.draw.text` to draw text
+on the screen.
+
+For example, add this to your :code:`draw` function to see what
+happens: ::
+
+  screen.draw.text('Hello!', center=(WIDTH/2, HEIGHT/2), fontsize=120)
+
+That's nice and big isn't it? But it never goes away, how do
+we fix this? Well we can add a counter and count down to zero
+then remove it.
+
+So we need to add two variables: one to store the message and one
+to store the counter. As we've done before let's put these on the
+:code:`pacman` sprite. Add these two lines under where you've
+created the pacman sprite: ::
+
+  pacman.banner = None
+  pacman.banner_counter = 0
+
+Now let's display a big `Ouch!` when Pac-Man loses a life...
+
+Find your :code:`update` function and in the if-statement that tests
+for :code:`g.colliderect(pacman)` add this line: ::
+
+  set_banner('Ouch!', 5)
+
+We've not written that function yet, so this won't work, but we write
+this line first to think about how we want the function to work. We
+don't yet know what 5 means, maybe it is seconds? Maybe some fraction
+of seconds? 
+
+Now add the function: ::
+
+  def set_banner(message, count):
+    pacman.banner = message
+    pacman.banner_counter = count
+
+OK, now we're in business. You can see that the function
+:code:`set_banner` is really shorthand for setting those two
+variables. Given that we'll probably show a few different banners
+this will save a fair bit of typing.
+
+Now we can update the draw function to remove the `Hello` message
+and use these variables: ::
+
+  if pacman.banner and pacman.banner_counter > 0: 
+      screen.draw.text(pacman.banner, center=(WIDTH/2, HEIGHT/2), fontsize=120)
+
+Time to test. Do you see any bugs?
+
+That's right: the banner never disappears. Let's fix that now.
+
+So we could decrement (programmer speak for 'reduce by one') the
+counter in the draw function, but this is executed many times per
+second so we'd need to use big numbers to keep the banner visible for
+long enough to read it. A better solution is to add a periodic
+function, this will be handy later too.
+
+
+Periodic functions
+------------------
+
+A periodic function is called repeatedly at equal intervals. We can
+use it to reduce our banner counter, and any others we might create.
+
+Here's how we can use it for our banner counter... add this code
+at the end of your program: ::
+
+  def periodic():
+    if pacman.banner_counter > 0:
+        pacman.banner_counter -= 1
+
+  clock.schedule_interval(periodic, 0.2)
+
+The function is what we want to do every period, and the last line
+tells PygameZero to call this function every 0.2 seconds or 5 times
+a second. 
+
+Now when you run your game you should see `Ouch!` displayed for a
+second and no more.
+
 Score and Lives
 ---------------
 
@@ -43,9 +133,9 @@ think we need to make changes to them? Have a think...
 
 ...
 
-OK, here's what you could try: in the code :code:`eat_food` function,
-inside the `if-statement` that checks for a dot, increase the score
-by one. So this block now reads: ::
+OK, here's what you could try for the score: in the code
+:code:`eat_food` function, inside the `if-statement` that checks for a
+dot, increase the score by one. So this block now reads: ::
 
   if world[iy][ix] == '.':
       world[iy][ix] = None
@@ -53,6 +143,12 @@ by one. So this block now reads: ::
       # Add this line...
       pacman.score += 1
 
+We know where to decrement lives, we just added a banner there. Update
+the block inside the if-statement so that it reads: ::
+
+  set_banner("Ouch!", 5)
+  pacman.lives -= 1
+  reset_sprites()
   
 Power-ups
 ---------
@@ -68,16 +164,16 @@ being careful to indent everything properly: ::
 OK, so now we get an extra 5 points on our score, but we also
 want the ghosts to run away from us. We need some way of knowing
 that the Pac-Man has a power-up, which should be time limited in
-some way.
+some way -- we can use counters again for this. 
 
 Let's start by adding another variable to the :code:`pacman` sprite.
 Near the top of your program add this line: ::
 
-  pacman.powerup = False
+  pacman.powerup = 0
 
 Now we can add this line in the :code:`eat_food` function: ::
   
-  pacman.powerup = True
+  pacman.powerup = 25
 
 The last thing we need to do is to make the ghosts change direction. We
 need something like this -- this won't work yet, but you get the idea: :: 
@@ -85,14 +181,18 @@ need something like this -- this won't work yet, but you get the idea: ::
   for g in ghosts: new_ghost_direction(g)
 
 Now if we can get :code:`new_ghost_direction` to take account of
-:code:`pacman.powerup` we can make them follow or run away from Pac-Man.
+:code:`pacman.powerup` we can make them follow or run away from
+Pac-Man.
 
 Hmmm...
 
       
-Ghosts running away
--------------------
+Run ghosts, run!
+----------------
 
+(Do ghosts actually have legs, can they run? Never mind.)
+
+To be completed...
 
 
 
