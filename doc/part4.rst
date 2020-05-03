@@ -171,12 +171,13 @@ Near the top of your program add this line: ::
 
   pacman.powerup = 0
 
-Now we can add this line in the :code:`eat_food` function: ::
+Now we can add this line in the :code:`eat_food` function inside
+that if-statement you just changed: ::
   
   pacman.powerup = 25
 
 The last thing we need to do is to make the ghosts change direction. We
-need something like this -- this won't work yet, but you get the idea: :: 
+need something like this -- this won't work yet, but you get the idea: ::
 
   for g in ghosts: new_ghost_direction(g)
 
@@ -192,8 +193,69 @@ Run ghosts, run!
 
 (Do ghosts actually have legs, can they run? Never mind.)
 
-To be completed...
+We already have a function called :code:`set_random_dir` which in
+theory works for any sprite, but we only use it for ghosts. It doesn't
+consider where Pac-Man is it just sets a random direction.
 
+Let's rename this function to make our intentions clearer, let's call
+it :code:`new_ghost_direction` and make it smarter so that ghosts
+can run away from Pac-Man if he has a power up.
 
+Here's the new function: ::
+
+  def new_ghost_direction(g):
+    if pacman.powerup:
+        g.dx = math.copysign(GHOST_SPEED*1.5, g.x - pacman.x)
+        g.dy = math.copysign(GHOST_SPEED*1.5, g.y - pacman.y)
+    else:
+        g.dx = random.choice([-GHOST_SPEED, GHOST_SPEED])
+        g.dy = random.choice([-GHOST_SPEED, GHOST_SPEED])
+
+The last bit is the same as before, but the first bit is new. If
+Pac-Man has a power up we have some weird maths going on. What does it
+mean? Here's what:
+
+* `g.dx` and `g.dy` are the ghost's direction, as before
+* `math.copysign` takes two numbers: some value and an expression
+  which returns a positive or negative number. It applies the sign of
+  that number to the value
+* In our function the sign is determined by the relative position
+  of Pac-Man and the ghost.
+* For example: if the ghost is to the right of Pac-Man the sign will
+  be positive so the ghost will move to the right (away from Pac-Man)
+* And if the ghost is to the left the sign will be negative and
+  the ghost will move to the left (away)
+* The value is the speed, which is 1.5 times the original, a bit
+  faster than before.
+
+Phew! That's a lot going on in only a few lines. Now that you've
+renamed the old function, we need to find where we used it and update
+this code to use the new method.
+
+Make the change in :code:`def make_ghost_actors`.
+
+Now we can use the new function for power ups. Plus we can add a
+banner to shout it out to the user. Update your :code:`eat_food`
+function so that it looks like this: ::
+
+  def eat_food():
+    ix,iy = int(pacman.x / BLOCK_SIZE), int(pacman.y / BLOCK_SIZE)
+    if world[iy][ix] == '.':
+        world[iy][ix] = None
+        pacman.food_left -= 1
+        pacman.score += 1
+    elif world[iy][ix] == '*':
+        world[iy][ix] = None
+        pacman.powerup = 25
+        set_banner("Power Up!", 5)
+        for g in ghosts: new_ghost_direction(g)
+        pacman.score += 5
+
+Time for a test... what do you think? 
+
+Flashing ghosts
+---------------
+
+Coming soon. 
 
 .. _code for part 4: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman4.py

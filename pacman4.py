@@ -98,8 +98,6 @@ def draw():
     for g in ghosts: g.draw()
     screen.draw.text("Score: %s" % pacman.score, topleft=(8, 4), fontsize=40)
     screen.draw.text("Lives: %s" % pacman.lives, topright=(WIDTH-8,4), fontsize=40)
-    screen.draw.text('Hello!', center=(WIDTH/2, HEIGHT/2), fontsize=120)
-
 
     if pacman.banner and pacman.banner_counter > 0:
         screen.draw.text(pacman.banner, center=(WIDTH/2, HEIGHT/2), fontsize=120)
