@@ -3,9 +3,9 @@
 Part 4
 ======
 
-Part 4 is a work in progress, so at the moment this page is just a
-bunch of notes. Feel free to have a read through and see what you can
-discover.
+Part 4 is a work in progress, so at the moment this page is a bit
+rough and not very well tested. Feel free to have a read through and
+see what you can discover.
 
 Tell the user what's happening
 ------------------------------
@@ -256,6 +256,11 @@ Time for a test... what do you think?
 Flashing ghosts
 ---------------
 
-Coming soon. 
+Coming soon. Questions...
+
+Which colour will represent fleeing ghosts?
+
+When to flash?
+
 
 .. _code for part 4: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman4.py

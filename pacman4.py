@@ -47,9 +47,9 @@ char_to_image = {
     '=': 'wall.png',
     '*': 'power.png',
     'g': 'ghost1.png',
-    'G': 'ghost2.png',
-    'h': 'ghost3.png',
-    'H': 'ghost4.png',
+    'G': 'ghost3.png',
+    'h': 'ghost4.png',
+    'H': 'ghost5.png',
 }
 
 def load_level(number):
@@ -79,7 +79,6 @@ def make_ghost_actors():
                 # Make the sprite in the correct position
                 g = Actor(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE), anchor=('left', 'top'))
                 g.orig_image = g.image
-                g.alt_image = 'ghost5.png'
                 new_ghost_direction(g)
 
                 ghosts.append(g)
@@ -232,20 +231,27 @@ def on_key_down(key):
     if key == keys.DOWN:
         pacman.dy = SPEED
 
-def periodic():
-    if pacman.powerup > 0:
-        pacman.powerup -= 1
-        # Flash the ghosts by swapping images
-        for g in ghosts:
-            # Last switch? Then switch back to original image if we need to
-            if pacman.powerup == 0:
-                if g.image != g.orig_image:
-                    g.image, g.alt_image = g.alt_image, g.image
-            else:
-                g.image, g.alt_image = g.alt_image, g.image
+def alternate(value, option1, option2):
+    if value == option1: return option2
+    else: return option1
 
+def periodic():
     if pacman.banner_counter > 0:
         pacman.banner_counter -= 1
+
+    if pacman.powerup > 0:
+        pacman.powerup -= 1
+
+        if pacman.powerup > 10:
+            # The blue version for fleeing ghosts
+            for g in ghosts: g.image = 'ghost2.png'
+        else:
+            # Flash for the last few seconds
+            for g in ghosts:
+                g.image = alternate(g.image, 'ghost_white.png', 'ghost2.png')
+
+        if pacman.powerup == 0:
+            for g in ghosts: g.image = g.orig_image
 
 # Game set up
 load_level(1)
