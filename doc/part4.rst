@@ -261,7 +261,7 @@ Notes:
 * Choose a coloured ghost sprite for the fleeing ghosts -- I used
   :code:`ghost2.png`
 * Make sure you don't use that colour for regular ghosts, edit ghosts
-  in :edit:`char_to_image` dictionary to swap out ghosts2.png for
+  in :code:`char_to_image` dictionary to swap out ghosts2.png for
   another colour.
 * This is a good time to add some more options for ghost colours, for
   example, we can use `h` and `H` as well as `g` and `G` to represent
