@@ -256,11 +256,73 @@ Time for a test... what do you think?
 Flashing ghosts
 ---------------
 
-Coming soon. Questions...
+Notes:
 
-Which colour will represent fleeing ghosts?
+* Choose a coloured ghost sprite for the fleeing ghosts -- I used
+  :code:`ghost2.png`
+* Make sure you don't use that colour for regular ghosts, edit ghosts
+  in :edit:`char_to_image` dictionary to swap out ghosts2.png for
+  another colour.
+* This is a good time to add some more options for ghost colours, for
+  example, we can use `h` and `H` as well as `g` and `G` to represent
+  ghosts in your world file: ::
 
-When to flash?
+    char_to_image = {
+      '.': 'dot.png',
+      '=': 'wall.png',
+      '*': 'power.png',
+      'g': 'ghost1.png',
+      'G': 'ghost3.png',
+      'h': 'ghost4.png',
+      'H': 'ghost5.png',
+    }
 
+* And we then need to update :code:`make_ghost_actors` to spot
+  these, so: :code:`if block in ['g', 'G', 'h', 'H']:`
+* Draw a white ghost, which we'll use for the flashing state when the
+  power up starts to run out. You can duplicate an existing ghost
+  sprite and use this as a starting point.
+* I used `GIMP`_ to edit the sprites, which is a powerful, free
+  graphics program. But it is very complex too! There are lots of
+  other options, you might already have a paint program on your
+  computer.
+* Let's do the flashing in our :code:`periodic` function. Add this
+  code: ::
+
+     if pacman.powerup > 0:
+        pacman.powerup -= 1
+
+        if pacman.powerup > 10:
+            # The blue version for fleeing ghosts
+            for g in ghosts: g.image = 'ghost2.png'
+        else:
+            # Flash for the last few seconds
+            for g in ghosts:
+                g.image = alternate(g.image, 'ghost_white.png', 'ghost2.png')
+
+        if pacman.powerup == 0:
+            for g in ghosts: g.image = g.orig_image
+  
+* There are two new things here: the :code:`alternate` function and a
+  reset back to :code:`g.orig_image`.
+
+* The :code:`alternate` function returns the first value, then the second,
+  then the first, and so on, each time it is called: ::
+
+    def alternate(value, option1, option2):
+      if value == option1: return option2
+      else: return option1
+
+* The last thing is to set :code:`g.orig_image` when we first create
+  the ghost, this allows us to return the ghost to its original sprite
+  when we're done with the power up.
+
+* In :code:`make_ghost_actors`: ::
+
+    g = Actor(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE), anchor=('left', 'top'))
+    g.orig_image = g.image
+
+    
 
 .. _code for part 4: https://github.com/ericclack/pygamezero_pacman/blob/master/pacman4.py
+.. _GIMP: https://www.gimp.org/
