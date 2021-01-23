@@ -299,7 +299,8 @@ the Pac-Man sprite:
 
     pacman.level = 1
    
-Now let's put the rest of the next-level work in a new functin called :code:`next_level`:
+Now let's put the rest of the next-level work in a new functin called
+:code:`next_level`:
 
 .. code:: python
 
@@ -316,6 +317,16 @@ Now let's put the rest of the next-level work in a new functin called :code:`nex
 
         reset_sprites()
 
+Now we can add the function :code:`reset_sprites`:
+
+..code:: python
+
+    def reset_sprites():
+	pacman.x = pacman.y = 1.5 * BLOCK_SIZE
+	# Move ghosts back to their start pos
+	for g, (x, y) in zip(ghosts, ghost_start_pos):
+	    animate(g, pos=(x * BLOCK_SIZE, y * BLOCK_SIZE))
+	
 Finally we just need to determine when to call this new
 function. There are two places. In :code:`update` add these lines just
 under the call to :code:`eat_food()`:
