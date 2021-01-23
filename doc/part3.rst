@@ -180,13 +180,13 @@ in ghosts` loop:
 .. code:: python
 
     if g.colliderect(pacman):
-        lose_life()
+        reset_sprites()
 
 Finally add this new function:
 
 .. code:: python
 
-    def lose_life():
+    def reset_sprites():
         pacman.x = pacman.y = 1.5 * BLOCK_SIZE
         # Move ghosts back to their start pos
         for g, (x, y) in zip(ghosts, ghost_start_pos):
@@ -317,16 +317,6 @@ Now let's put the rest of the next-level work in a new functin called
 
         reset_sprites()
 
-Now we can add the function :code:`reset_sprites`:
-
-.. code:: python
-
-    def reset_sprites():
-	pacman.x = pacman.y = 1.5 * BLOCK_SIZE
-	# Move ghosts back to their start pos
-	for g, (x, y) in zip(ghosts, ghost_start_pos):
-	    animate(g, pos=(x * BLOCK_SIZE, y * BLOCK_SIZE))
-	
 Finally we just need to determine when to call this new
 function. There are two places. In :code:`update` add these lines just
 under the call to :code:`eat_food()`:
