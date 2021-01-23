@@ -319,7 +319,7 @@ Now let's put the rest of the next-level work in a new functin called
 
 Now we can add the function :code:`reset_sprites`:
 
-..code:: python
+.. code:: python
 
     def reset_sprites():
 	pacman.x = pacman.y = 1.5 * BLOCK_SIZE
