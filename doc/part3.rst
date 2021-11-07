@@ -53,7 +53,7 @@ Your function should now look like this:
         with open(file) as f:
             for line in f:
                 row = []
-                for block in line.strip():
+                for block in line:
                     row.append(block)
                     if block == '.': pacman.food_left += 1
                 world.append(row)          

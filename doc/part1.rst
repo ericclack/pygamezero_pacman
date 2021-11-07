@@ -69,7 +69,7 @@ Now add this function to your code underneath that:
        with open(file) as f:
            for line in f:
                row = []
-               for block in line.strip():
+               for block in line:
                    row.append(block)
                world.append(row)
 
@@ -112,12 +112,9 @@ look at what that line of code does:
   :code:`f`.
 
 Inside the block we can then use a simple :code:`for` loop to iterate
-over the lines in the file referenced in variable :code:`f`. Each line
-has a newline at the end of it (your editor's way of marking a new
-line of text) and we can strip this off with :code:`line.strip()`.
-
-Finally another loop get each character from the each line of the file
-and stores it away for later refence.
+over the lines in the file referenced in variable :code:`f`. And
+inside this loop another loop get each character from the each line of
+the file and stores it away for later refence.
 
 The next step is to draw this on the screen...
 

@@ -30,7 +30,7 @@ def load_level(number):
     with open(file) as f:
         for line in f:
             row = []
-            for block in line.strip():
+            for block in line:
                 row.append(block)
             world.append(row)
 
