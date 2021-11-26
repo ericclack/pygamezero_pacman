@@ -51,3 +51,10 @@ Get in touch
 We would love to hear how you've got on with this tutorial or receive
 any other feedback. Get in touch with the author: |author|
  
+----
+
+.. include:: <isonum.txt>
+
+Copyright |copy| 2021, Eric Clack
+
+Licensed under the Creative Commons Attribution-NonCommercial-ShareAlike licence v4.0
