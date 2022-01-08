@@ -252,12 +252,19 @@ add these new lines near the top of your program, just under
     pacman = Actor('pacman_o.png', anchor=('left', 'top'))
     pacman.x = pacman.y = 1*BLOCK_SIZE
 
-And then we want to draw our Pac-Man in the world, so add this line to
-the end of your :code:`draw` function:
+And then we want to draw our Pac-Man in the world, so add this new
+line (the one in yellow) to the end of your :code:`draw` function:
 
-.. code:: python
-
-    pacman.draw()
+.. code-block:: python
+   :emphasize-lines: 7
+      
+   def draw():
+      for y, row in enumerate(world):
+          for x, block in enumerate(row):
+              image = char_to_image.get(block, None)
+              if image:
+                  screen.blit(char_to_image[block], (x*BLOCK_SIZE, y*BLOCK_SIZE))
+      pacman.draw()
 
 This places Pac-Man at the top left of the screen. 
 
