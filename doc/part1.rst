@@ -242,8 +242,9 @@ Adding the Pac-Man
 ------------------
 
 OK, time to add our Pac-Man sprite. Let's start with an Actor to draw
-the sprite. Add this code just under the set of capitalised constants
-(e.g.  :code:`BLOCK_SIZE`):
+the sprite. We need this sprite to be avaiable to all of our code, so
+add these new lines near the top of your program, just under
+:code:`WIDTH` and :code:`HEIGHT`:
 
 .. code:: python
           
@@ -251,7 +252,8 @@ the sprite. Add this code just under the set of capitalised constants
     pacman = Actor('pacman_o.png', anchor=('left', 'top'))
     pacman.x = pacman.y = 1*BLOCK_SIZE
 
-And add this line to the end of your :code:`draw` function:
+And then we want to draw our Pac-Man in the world, so add this line to
+the end of your :code:`draw` function:
 
 .. code:: python
 
@@ -308,9 +310,11 @@ your :code:`on_key_down` function and add the new function underneath:
 
 You might be wondering what :code:`dx` and :code:`dy` are. These are
 two new variables that we've added to our pacman character that will
-track direction in x and y (-1 is up or left, 1 is down or right). We
-need to initialise these so add these two lines just under where we
-set :code:`pacman.x` and :code:`pacman.y`:
+track direction in x and y (-1 is up or left, 1 is down or right).
+
+We need to initialise these so add these two lines near the top of
+your program, just under where we set :code:`pacman.x` and
+:code:`pacman.y`:
 
 .. code:: python
 
