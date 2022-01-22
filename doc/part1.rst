@@ -51,7 +51,7 @@ Did you notice we left some gaps for our characters to move from one
 side to the other for a quick escape?
 
 Save this file in the same directory as where you saved
-:code:`pacman.py`. Call the file :code:`level-1.txt`. 
+:code:`pacman.py`. Call the file :code:`level-1.txt`
 
 Now let's try reading that file in your Python code. Add this empty
 array to contain the world:
