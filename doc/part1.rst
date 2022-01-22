@@ -48,7 +48,7 @@ to draw some walls for your world, for example: ::
   ========== =========
 
 Did you notice we left some gaps for our characters to move from one
-side to the other for a quick escape?
+side to the other for a quick escape? 
 
 Save this file in the same directory as where you saved
 :code:`pacman.py`. Call the file :code:`level-1.txt`
@@ -91,9 +91,19 @@ That's Python's way of printing a list and it means that your code
 loaded your world from the text file. Each element in the list is a
 character at a specific location in your world.
 
-If this didn't work, and you didn't make any typos, it could be that
-your code and level files are not in the right place. Check that they
-are both in your :code:`mu_code` directory.
+.. note::
+   If this didn't work, and you didn't make any typos, it could
+   be that your code and level files are not in the right place. Check
+   that they are both in your :code:`mu_code` directory.
+
+Did you notice that the world is all printed out on a single line, so
+that it is hard to read? We can make that list print more clearly so
+that we can see every line of the world like this:
+
+.. code:: python
+
+   for row in world: print(row)
+
 
 How reading a file works
 ........................
