@@ -63,3 +63,5 @@ def on_key_down(key):
         pacman.dy = 1
 
 load_level(1)
+
+for row in world: print(row)
