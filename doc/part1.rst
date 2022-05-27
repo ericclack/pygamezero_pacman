@@ -197,6 +197,7 @@ for the screen position.
 .. code:: python
     
     def draw():
+	screen.clear()
         for y, row in enumerate(world):
             for x, block in enumerate(row):
                 image = char_to_image.get(block, None)
